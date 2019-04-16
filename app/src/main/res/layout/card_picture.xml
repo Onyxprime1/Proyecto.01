@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:button="@drawable/checkbox_selector"
                     />
+
                 <TextView
                     android:id="@+id/likeNumber"
                     android:layout_width="wrap_content"
