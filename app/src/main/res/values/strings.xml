@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Proyecto0.1</string>
+    <string name="name">nombre de usuario</string>
+    <string name="passwod">contraceña</string>
+    <string name="buuton">login</string>
+    <string name="don_have_account">no tienes una cuenta?</string>
+    <string name="create_here">  creala aqui</string>
+    <string name="email">correo</string>
+    <string name="user">nombre</string>
+    <string name="lastname">apellido</string>
+    <string name="corfirmpass">confirme contraceña</string>
+    <string name="buuton2">unete</string>
+    <string name="bartoo">create cuenta</string>
+    <string name="title_activity_referenc">referenc</string>
+    <string name="user_card">theyisus</string>
+    <string name="firt_word">give power</string>
+    <string name="time">4 dias</string>
+    <string name="like">10 Me gusta</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lore">metallica ................................................................................................................................................................</string>
+    <string name="tramsiton">trancition</string>
+</resources>
