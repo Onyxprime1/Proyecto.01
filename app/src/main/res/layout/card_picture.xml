@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_card"
-                android:textColor="@color/black"
+                android:textColor="@color/texto"
                 android:textSize="30sp"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/firt_word"
                     android:textSize="15sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/texto"/>
                 <TextView
                     android:id="@+id/timecard"
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:text="@string/time"
                     android:textSize="15dp"
                     android:layout_marginLeft="15sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/texto"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:text="@string/like"
                     android:textSize="15dp"
                     android:layout_marginLeft="15sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/texto"/>
             </LinearLayout>
 
         </LinearLayout>
