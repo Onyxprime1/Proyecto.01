@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Acounnt">
+    tools:context=".login.Acounnt">
 
     <include
      android:id="@+id/apptoolbar"
@@ -89,6 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/buuton2"
+                android:layout_marginTop="20dp"
                 android:theme="@style/RaisbuttonDark"/>
         </LinearLayout>
     </ScrollView>

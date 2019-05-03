@@ -21,14 +21,14 @@
         <activity android:name=".view.Container"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Acounnt"
-            android:parentActivityName=".MainActivity"
+            android:name=".login.Acounnt"
+            android:parentActivityName=".login.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".login.MainActivity" />
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".login.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
