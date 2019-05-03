@@ -10,6 +10,7 @@ public class ModeloLogin {
     public ModeloLogin() {
     }
 
+
     public ModeloLogin(String nombre, String apellido, String correo, String contracena, String confirmacion) {
         this.nombre = nombre;
         this.apellido = apellido;
