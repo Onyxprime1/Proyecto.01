@@ -127,7 +127,7 @@ public class Fragment2 extends Fragment {
         switch (item.getItemId()) {
             case R.id.exit:
                 firebaseAuth.signOut();
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                //startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

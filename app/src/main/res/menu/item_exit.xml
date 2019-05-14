@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/exit"
-        android:title="cerrar seccion"
+        android:title="cerrar sesion"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 </menu>
