@@ -1,33 +1,43 @@
 package kevin.com.proyecto01.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.adaptadores.adaptador;
 import kevin.com.proyecto01.adaptadores.modelo;
+import kevin.com.proyecto01.login.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Fragment2 extends Fragment {
 
-
     RecyclerView recy2;
     kevin.com.proyecto01.adaptadores.adaptador adaptador;
-    public Fragment2() {
-        // Required empty public constructor
-    }
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+
 
 
     @Override
@@ -35,6 +45,21 @@ public class Fragment2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    setUserData(user);
+                } else {
+                    goLogInScreen();
+                }
+            }
+        };
+        setHasOptionsMenu(true);
         showToolbar("",view);
         recy2 = view.findViewById(R.id.recy2);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -65,5 +90,54 @@ public class Fragment2 extends Fragment {
         activi.getSupportActionBar().setTitle(tittle);
         activi.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        AppCompatActivity activi = (AppCompatActivity) getActivity();
+        activi.getMenuInflater().inflate(R.menu.item_exit,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        //return  ;
+    }
+
+
+
+//********************************************************************************************************************************
+    private void setUserData(FirebaseUser user) {
+
+    }
+//********************************************************************************************************************************
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(firebaseAuthListener);
+    }
+
+    private void goLogInScreen() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.exit:
+                firebaseAuth.signOut();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (firebaseAuthListener != null) {
+            firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+        }
     }
 }
