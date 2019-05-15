@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ModeloLogin login;
     SignInButton button2;
     Button button;
-
-    private FirebaseAuth authGoogle; //google
+        private FirebaseAuth authGoogle; //google
     private FirebaseAuth authUserPass; //correo
     private FirebaseAuth.AuthStateListener GoogleListener;
     private GoogleApiClient mGoogleSignInClient;
