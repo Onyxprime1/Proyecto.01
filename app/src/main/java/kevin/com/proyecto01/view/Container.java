@@ -41,7 +41,7 @@ public class Container extends AppCompatActivity {
                                  .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                  .addToBackStack(null).commit();
                         viewIsAtHome = true;
-                        Toast.makeText(Container.this, "estan en casa wey", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Container.this, "estan en casa wey", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.search:
                         Fragment3 fragment3 = new Fragment3();

@@ -41,12 +41,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth authGoogle; //google
     private FirebaseAuth authUserPass; //correo
     private FirebaseAuth.AuthStateListener GoogleListener;
-    private FirebaseAuth.AuthStateListener UserPassListener;
     private GoogleApiClient mGoogleSignInClient;
     private static int RC_SING_IN = 11;
     private static final String TAG = "MainActivity";
-    String bandera = "google";
-    String bandera2 = "userPass";
+    String bandera = "";
+    String bandera2 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +60,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         gui();
-        if (bandera.equals("google")){
-            authGoogle = FirebaseAuth.getInstance();
-        }
+        authGoogle = FirebaseAuth.getInstance();
+        authUserPass = FirebaseAuth.getInstance();
         GoogleListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
-                        goMainScreen();
+                        if (bandera.equals("google")) {
+                            goMainScreen();
+                        } else if (bandera2.equals("userPass")) {
+                            Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
+                        }
                     }
-            }
-        };
-        UserPassListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user2 = firebaseAuth.getCurrentUser();
-                if (user2 != null){
-
                 }
-            }
         };
 
     }
@@ -95,7 +88,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    //***************************************************************************************************************************//
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button2:
+                bandera = "google";
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
+                startActivityForResult(intent, RC_SING_IN);
+                break;
+            case R.id.login:
+                bandera2 = "userPass";
+                login();
+                break;
+        }
+    }
+    public void login(){
+        login = new ModeloLogin();
+        login.setCorreo(texto1.getText().toString());
+        login.setContracena(texto2.getText().toString());
+        singnIn(login.getCorreo(), login.getContracena());
+    }
+
 
     public void registro(View v) {
         startActivity(new Intent(getApplication(), Acounnt.class));
@@ -126,44 +139,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-    //*****************************************************************************************************************************************//
-
-   @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.button2:
-                bandera = "google";
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
-                startActivityForResult(intent, RC_SING_IN);
-                break;
-            case R.id.login:
-                bandera = "userPass";
-                authUserPass = FirebaseAuth.getInstance();
-                login = new ModeloLogin();
-                login.setCorreo(texto1.getText().toString());
-                login.setContracena(texto2.getText().toString());
-                singnIn(login.getCorreo(), login.getContracena());
-            break;
-        }
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-        if (bandera.equals("google")){
-            authGoogle.addAuthStateListener(GoogleListener);
-        }else if (bandera.equals("userPass")){
-            authUserPass.addAuthStateListener(UserPassListener);
-        }else {
-            Log.d(TAG, "ERROOOOOOOOR");
-        }
+        authGoogle.addAuthStateListener(GoogleListener);
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     @Override
@@ -175,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             handleSignInResult(result);
         }
     }
-
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             firebaseAuthWithGoogle(result.getSignInAccount());
@@ -205,9 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
     private void updateUI(Object o) {
-
     }
 
     private void goMainScreen() {
@@ -221,8 +201,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStop();
         if (GoogleListener!= null){
             authGoogle.removeAuthStateListener(GoogleListener);
-        }else if (UserPassListener != null){
-            authUserPass.removeAuthStateListener(UserPassListener);
         }
     }
 }
