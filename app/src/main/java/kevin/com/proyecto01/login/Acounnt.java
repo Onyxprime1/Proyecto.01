@@ -84,6 +84,13 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
                     startActivity(new Intent(Acounnt.this,MainActivity.class));
                 }else {
                     showError("El usuario ya existe");
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
                 }
             }
         });
