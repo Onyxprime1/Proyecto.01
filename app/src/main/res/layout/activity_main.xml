@@ -79,7 +79,7 @@
                 android:text="@string/buuton"
                 android:layout_marginHorizontal="50dp"
                 android:theme="@style/RaisbuttonDark"
-                android:onClick="ingresar"/>
+                />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/button2"
                 android:layout_width="match_parent"

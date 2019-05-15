@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,39 +36,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView texto3;
     ModeloLogin login;
     SignInButton button2;
+    Button button;
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth mfirebaseAuth;
-    private FirebaseAuth.AuthStateListener fAuthStateListener;
+    private FirebaseAuth authGoogle; //google
+    private FirebaseAuth authUserPass; //correo
+    private FirebaseAuth.AuthStateListener GoogleListener;
+    private FirebaseAuth.AuthStateListener UserPassListener;
     private GoogleApiClient mGoogleSignInClient;
     private static int RC_SING_IN = 11;
     private static final String TAG = "MainActivity";
+    String bandera = "google";
+    String bandera2 = "userPass";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
         mGoogleSignInClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
         gui();
-        firebaseAuth = FirebaseAuth.getInstance();
-        mfirebaseAuth = FirebaseAuth.getInstance();
-        fAuthStateListener = new FirebaseAuth.AuthStateListener() {
+        if (bandera.equals("google")){
+            authGoogle = FirebaseAuth.getInstance();
+        }
+        GoogleListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    goMainScreen();
-                }else {
+                    if (user != null) {
+                        goMainScreen();
+                    }
+            }
+        };
+        UserPassListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user2 = firebaseAuth.getCurrentUser();
+                if (user2 != null){
 
                 }
             }
@@ -80,29 +90,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         texto3 = findViewById(R.id.txtdonhaveAccunt);
         button2 = findViewById(R.id.button2);
         button2.setOnClickListener(this);
+        button = findViewById(R.id.login);
+        button.setOnClickListener(this);
+
     }
 
     //***************************************************************************************************************************//
-    public void ingresar(View view) {
-        login = new ModeloLogin();
-        login.setCorreo(texto1.getText().toString());
-        login.setContracena(texto2.getText().toString());
-        singnIn(login.getCorreo(), login.getContracena());
-
-    }
 
     public void registro(View v) {
         startActivity(new Intent(getApplication(), Acounnt.class));
     }
 
+
     protected void singnIn(String email, String pass) {
         if (!login.getCorreo().equals("")||!login.getContracena().equals("")){
-            mfirebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            authUserPass.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    button.setVisibility(View.VISIBLE);
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mfirebaseAuth.getCurrentUser();
-                        if (user.isEmailVerified()) {
+                        FirebaseUser user2 = authUserPass.getCurrentUser();
+                        if (user2.isEmailVerified()) {
                             Toast.makeText(MainActivity.this, "Iniciando...", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), Container.class));
                             finish();
@@ -123,16 +131,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
    @Override
     public void onClick(View v) {
-
-       Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
-       startActivityForResult(intent, RC_SING_IN);
+        switch (v.getId()){
+            case R.id.button2:
+                bandera = "google";
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
+                startActivityForResult(intent, RC_SING_IN);
+                break;
+            case R.id.login:
+                bandera = "userPass";
+                authUserPass = FirebaseAuth.getInstance();
+                login = new ModeloLogin();
+                login.setCorreo(texto1.getText().toString());
+                login.setContracena(texto2.getText().toString());
+                singnIn(login.getCorreo(), login.getContracena());
+            break;
+        }
     }
-
 
     @Override
     protected void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(fAuthStateListener);
+        if (bandera.equals("google")){
+            authGoogle.addAuthStateListener(GoogleListener);
+        }else if (bandera.equals("userPass")){
+            authUserPass.addAuthStateListener(UserPassListener);
+        }else {
+            Log.d(TAG, "ERROOOOOOOOR");
+        }
     }
 
 
@@ -162,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        authGoogle.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -171,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success");
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    FirebaseUser user = authGoogle.getCurrentUser();
                     updateUI(user);
                 } else {
                     updateUI(null);
@@ -194,8 +219,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStop() {
         super.onStop();
-        if (fAuthStateListener != null){
-            firebaseAuth.removeAuthStateListener(fAuthStateListener);
+        if (GoogleListener!= null){
+            authGoogle.removeAuthStateListener(GoogleListener);
+        }else if (UserPassListener != null){
+            authUserPass.removeAuthStateListener(UserPassListener);
         }
     }
 }
