@@ -17,12 +17,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.adaptadores.adaptador;
 import kevin.com.proyecto01.adaptadores.modelo;
@@ -35,19 +42,26 @@ public class Fragment2 extends Fragment {
 
     RecyclerView recy2;
     kevin.com.proyecto01.adaptadores.adaptador adaptador;
+    private GoogleApiClient googleApiClient;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
-
-
+    private CircleImageView circle;
+    private TextView texto;
+    private ImageView img;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
+       /* googleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity(), )
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();*/
         firebaseAuth = FirebaseAuth.getInstance();
-
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -59,6 +73,9 @@ public class Fragment2 extends Fragment {
                 }
             }
         };
+        circle = view.findViewById(R.id.foto);
+        img  = view.findViewById(R.id.fondo);
+        texto = view.findViewById(R.id.userFragmen2);
         setHasOptionsMenu(true);
         showToolbar("",view);
         recy2 = view.findViewById(R.id.recy2);
@@ -83,6 +100,7 @@ public class Fragment2 extends Fragment {
         return listo;
     }
 
+
     public void showToolbar(String tittle,View view) {
         AppCompatActivity activi = (AppCompatActivity) getActivity();
         Toolbar mytoolbar = view.findViewById(R.id.toolbar3);
@@ -106,7 +124,8 @@ public class Fragment2 extends Fragment {
 
 //********************************************************************************************************************************
     private void setUserData(FirebaseUser user) {
-
+        texto.setText(user.getDisplayName());
+        Glide.with(this).load(user.getPhotoUrl()).into(circle);
     }
 //********************************************************************************************************************************
 

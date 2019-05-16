@@ -37,11 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ModeloLogin login;
     SignInButton button2;
     Button button;
-        private FirebaseAuth authGoogle; //google
+    private FirebaseAuth authGoogle; //google
     private FirebaseAuth authUserPass; //correo
     private FirebaseAuth.AuthStateListener GoogleListener;
     private GoogleApiClient mGoogleSignInClient;
-    private static int RC_SING_IN = 11;
+    private static int RC_SING_IN = 101;
     private static final String TAG = "MainActivity";
     String bandera = "";
     String bandera2 = "";
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SING_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -171,8 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         authGoogle.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
-                button2.setVisibility(View.VISIBLE);
+                button2.setVisibility(View.GONE);
 
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
@@ -182,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     updateUI(null);
                 }
-
             }
         });
     }
@@ -190,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void goMainScreen() {
-        Intent intent = new Intent(this, Container.class);
+        Intent intent = new Intent(getApplicationContext(), Container.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -202,4 +199,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             authGoogle.removeAuthStateListener(GoogleListener);
         }
     }
+
+
 }
