@@ -6,8 +6,7 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardimagen"
     cardview:cardCornerRadius="5dp"
-    android:layout_margin="10dp"
-    >
+    android:layout_margin="10dp">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,8 +61,7 @@
                     android:id="@+id/likeCheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/checkbox_selector"
-                    />
+                    android:button="@drawable/checkbox_selector"/>
                 <TextView
                     android:id="@+id/likeNumber"
                     android:layout_width="wrap_content"

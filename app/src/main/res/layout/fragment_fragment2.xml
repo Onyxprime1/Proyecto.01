@@ -21,24 +21,25 @@ tools:context=".view.fragment.Fragment2">
             android:fitsSystemWindows="true"
             app:statusBarScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="200dp"
-                android:paddingBottom="20dp"
                 android:layout_gravity="center|top"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="200dp"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/userFragmen2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_card"
-                    android:textColor="@color/texto"
-                    android:textSize="30sp"/>
+                    android:textColor="@color/textColor"
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar

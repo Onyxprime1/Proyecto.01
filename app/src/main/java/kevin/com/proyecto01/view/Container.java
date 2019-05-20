@@ -1,5 +1,6 @@
 package kevin.com.proyecto01.view;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -9,9 +10,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.view.fragment.Chat;
 import kevin.com.proyecto01.view.fragment.Fragment1;
 import kevin.com.proyecto01.view.fragment.Fragment2;
 import kevin.com.proyecto01.view.fragment.Fragment3;
+import kevin.com.proyecto01.view.fragment.Fragment4;
 
 public class Container extends AppCompatActivity {
 
@@ -46,6 +49,13 @@ public class Container extends AppCompatActivity {
                     case R.id.search:
                         Fragment3 fragment3 = new Fragment3();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container1, fragment3)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null).commit();
+                        viewIsAtHome = false;
+                        break;
+                    case R.id.chats:
+                        Fragment4 fragment4 = new Fragment4();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container1,fragment4)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                 .addToBackStack(null).commit();
                         viewIsAtHome = false;

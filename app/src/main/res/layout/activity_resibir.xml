@@ -72,16 +72,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="10"
-                />
+                android:text="10" />
             <TextView
                 android:id="@+id/secondWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="me gustan"
-                android:layout_marginLeft="10sp"
-                />
+                android:layout_marginLeft="10sp" />
         </LinearLayout>
             <View
                 android:layout_width="match_parent"
