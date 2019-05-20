@@ -63,9 +63,10 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(getContext())
-                .enableAutoManage(getActivity(), this )
+                .enableAutoManage(getActivity(),0, this )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
