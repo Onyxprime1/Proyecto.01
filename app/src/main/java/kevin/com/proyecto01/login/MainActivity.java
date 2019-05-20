@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             });
+
         }
 
     }
@@ -166,19 +167,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
 
+        button2.setVisibility(View.GONE);
         AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
         authGoogle.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                button2.setVisibility(View.GONE);
 
-                if (task.isSuccessful()) {
+                button2.setVisibility(View.VISIBLE);
+               /* if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser user = authGoogle.getCurrentUser();
                     updateUI(user);
                 } else {
                     updateUI(null);
+                }*/
+                if (!task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "no entro chavo", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -200,5 +205,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        authGoogle.addAuthStateListener(GoogleListener);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        authGoogle.addAuthStateListener(GoogleListener);
+    }
 }

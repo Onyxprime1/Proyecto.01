@@ -19,11 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -38,7 +42,7 @@ import kevin.com.proyecto01.login.MainActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment2 extends Fragment {
+public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     RecyclerView recy2;
     kevin.com.proyecto01.adaptadores.adaptador adaptador;
@@ -53,14 +57,15 @@ public class Fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
-       /* googleApiClient = new GoogleApiClient.Builder(getContext())
-                .enableAutoManage(getActivity(), )
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity(), this )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();*/
+                .build();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -145,7 +150,7 @@ public class Fragment2 extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.exit:
-                firebaseAuth.signOut();
+                logOut();
                 //startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
         }
@@ -158,5 +163,26 @@ public class Fragment2 extends Fragment {
         if (firebaseAuthListener != null) {
             firebaseAuth.removeAuthStateListener(firebaseAuthListener);
         }
+    }
+
+    public void logOut() {
+        firebaseAuth.signOut();
+
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                if (status.isSuccess()) {
+                    goLogInScreen();
+                } else {
+                    Toast.makeText(getActivity(), "nooo perro", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
     }
 }
