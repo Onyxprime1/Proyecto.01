@@ -58,14 +58,14 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+       /* GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
-        googleApiClient = new GoogleApiClient.Builder(getContext())
+      /*  googleApiClient = new GoogleApiClient.Builder(getContext())
                 .enableAutoManage(getActivity(),0, this )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+                .build();*/
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
