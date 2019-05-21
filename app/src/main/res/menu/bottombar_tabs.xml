@@ -19,6 +19,7 @@
         android:icon="@drawable/ic_person_black_24dp"
         android:title="perfil"
         app:showAsAction="always|withText"/>
+
     <item
         android:id="@+id/chats"
         android:enabled="true"

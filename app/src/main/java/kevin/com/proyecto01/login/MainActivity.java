@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import kevin.com.proyecto01.ActivityDashboard;
 import kevin.com.proyecto01.R;
-import kevin.com.proyecto01.view.Container;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         //if (bandera.equals("google")) {
-                            goMainScreen();
+                            //goMainScreen();
                         //} else if (bandera2.equals("userPass")) {
                        //     Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
                        // }
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         FirebaseUser user2 = authUserPass.getCurrentUser();
                         if (user2.isEmailVerified()) {
                             Toast.makeText(MainActivity.this, "Iniciando...", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), Container.class));
+                            startActivity(new Intent(getApplicationContext(), ActivityDashboard.class));
                             finish();
                         } else {
                             Toast.makeText(MainActivity.this, "la cuenta no ha sido iniciada", Toast.LENGTH_SHORT).show();
@@ -191,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void goMainScreen() {
-        Intent intent = new Intent(getApplicationContext(), Container.class);
+        Intent intent = new Intent(getApplicationContext(), ActivityDashboard.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
