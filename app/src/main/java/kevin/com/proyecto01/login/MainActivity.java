@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
-                        if (bandera.equals("google")) {
+                        //if (bandera.equals("google")) {
                             goMainScreen();
-                        } else if (bandera2.equals("userPass")) {
-                            Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
-                        }
+                        //} else if (bandera2.equals("userPass")) {
+                       //     Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
+                       // }
                     }
                 }
         };
@@ -134,10 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             });
-
         }
-
     }
+
 
     @Override
     protected void onStart() {
