@@ -36,7 +36,7 @@ public class Fragment4 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view = inflater.inflate(R.layout.fragment_fragment4, container, false);
-       showToolbar("Chats",view);
+       //showToolbar("Chats",view);
        mRecyclerView = view.findViewById(R.id.recycler_chats);
        mListaChats = new ArrayList<>();
        cargarListaChats();
@@ -48,9 +48,6 @@ public class Fragment4 extends Fragment {
         mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2018",2));
         mListaChats.add(new ChatsModel(" ","Carlos","Hola","14/03/2019",2));
         mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/01/2019",2));
-        mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2017",2));
-        mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2017",2));
-        mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2017",2));
         mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2017",2));
         mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2017",2));
         mListaChats.add(new ChatsModel(" ","Carlos","Hola","28/03/2017",2));
