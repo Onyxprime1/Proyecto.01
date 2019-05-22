@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         //if (bandera.equals("google")) {
-                            //goMainScreen();
+                            goMainScreen();
                         //} else if (bandera2.equals("userPass")) {
                        //     Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
                        // }
