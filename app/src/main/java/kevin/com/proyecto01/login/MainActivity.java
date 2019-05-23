@@ -60,17 +60,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gui();
         authGoogle = FirebaseAuth.getInstance();
         authUserPass = FirebaseAuth.getInstance();
-
         GoogleListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
-                        if (bandera.equals("google")) {
-                            goMainScreen();
-                        } else if (bandera2.equals("userPass")) {
-                            Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
-                        }
+                        //if (bandera.equals("google")) {
+                            //goMainScreen();
+                        //} else if (bandera2.equals("userPass")) {
+                       //     Toast.makeText(MainActivity.this, "-----------", Toast.LENGTH_SHORT).show();
+                       // }
                     }
                 }
         };
@@ -173,14 +172,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 button2.setVisibility(View.VISIBLE);
-                if (task.isSuccessful()) {
+               /* if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser user = authGoogle.getCurrentUser();
                     updateUI(user);
                 } else {
                     updateUI(null);
+                }*/
+                if (!task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "no entro chavo", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
