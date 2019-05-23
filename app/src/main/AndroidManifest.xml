@@ -16,7 +16,9 @@
             android:name=".ActivityDashboard"
             android:label="@string/title_activity_dashboard"></activity>
         <activity android:name=".view.fragment.Chat" />
-        <activity android:name=".view.Recibir"/>
+        <activity android:name=".view.Recibir"
+            android:parentActivityName=".ActivityDashboard">
+        </activity>
 
         <activity
             android:name=".login.Acounnt"
