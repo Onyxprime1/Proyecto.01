@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
-import kevin.com.proyecto01.view.Resibir;
+import kevin.com.proyecto01.view.Recibir;
 
 public class adaptador extends RecyclerView.Adapter<adaptador.ViewHolder> {
 
@@ -48,7 +48,7 @@ public class adaptador extends RecyclerView.Adapter<adaptador.ViewHolder> {
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Resibir.class);
+                Intent intent = new Intent(context, Recibir.class);
                 intent.putExtra("titulo",lista.get(i).getTime());
                 intent.putExtra("nombre",lista.get(i).getUserName());
                 intent.putExtra("like",lista.get(i).getLike());

@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 
 import kevin.com.proyecto01.R;
 
-public class Resibir extends AppCompatActivity {
+public class Recibir extends AppCompatActivity {
 
     TextView texto1;
     TextView texto2;
@@ -31,9 +31,9 @@ public class Resibir extends AppCompatActivity {
         texto2 = findViewById(R.id.like2);
         texto3 = findViewById(R.id.title3);
         img2 = findViewById(R.id.header);
-        String uno =parametros.getString("nombre");
-        String dos =parametros.getString("like");
-        String tres =parametros.getString("titulo");
+        String uno = parametros.getString("nombre");
+        String dos = parametros.getString("like");
+        String tres = parametros.getString("titulo");
         String cuatro = parametros.getString("img");
         Glide.with(this).load(cuatro).into(img2);
         texto1.setText(uno);
