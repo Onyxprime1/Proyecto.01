@@ -1,9 +1,12 @@
 package kevin.com.proyecto01.view.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +47,8 @@ import kevin.com.proyecto01.login.MainActivity;
  */
 public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
+    private SharedPreferences preferences;
+
     RecyclerView recy2;
     kevin.com.proyecto01.adaptadores.adaptador adaptador;
     private GoogleApiClient googleApiClient;
@@ -58,14 +63,17 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
 
-       /* GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+
+
+       GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
-      /*  googleApiClient = new GoogleApiClient.Builder(getContext())
+       googleApiClient = new GoogleApiClient.Builder(getContext())
                 .enableAutoManage(getActivity(),0, this )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();*/
+                .build();
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -174,11 +182,25 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
             public void onResult(@NonNull Status status) {
                 if (status.isSuccess()) {
                     goLogInScreen();
+                    removeSharedPreferences();
                 } else {
                     Toast.makeText(getActivity(), "nooo perro", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        Auth.GoogleSignInApi.revokeAccess(googleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        goLogInScreen();
+                    }
+                }
+        );
+    }
+
+    private void removeSharedPreferences() {
+        preferences.edit().clear().apply();
     }
 
 

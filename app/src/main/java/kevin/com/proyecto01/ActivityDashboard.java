@@ -1,5 +1,7 @@
 package kevin.com.proyecto01;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -60,12 +62,15 @@ public class ActivityDashboard extends AppCompatActivity {
 
     private BottomNavigationView navView ;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
 
         getSupportFragmentManager()
                 .beginTransaction()
