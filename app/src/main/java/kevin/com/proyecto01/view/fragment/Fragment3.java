@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -36,10 +37,10 @@ public class Fragment3 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment3, container, false);
         recy3 = view.findViewById(R.id.recy3);
-       gridLayoutManager = new GridLayoutManager(view.getContext(),2);
+        gridLayoutManager = new GridLayoutManager(view.getContext(),2);
         recy3.setHasFixedSize(true);
         recy3.setLayoutManager(gridLayoutManager);
-        adapt = new Adaptador(listade(),R.layout.card_picture,getActivity());
+        adapt = new Adaptador(listade(),R.layout.card_search,getActivity());
         recy3.setAdapter(adapt);
         return view;
     }
