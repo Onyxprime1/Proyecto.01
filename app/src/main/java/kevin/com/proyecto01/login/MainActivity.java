@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,7 @@ import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.Util.Util;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private SharedPreferences preferences;
 
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivityLog";
     String bandera = "";
     String bandera2 = "";
+
+    private CheckBox checky;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = Util.getUserMailPrefs(preferences);
         String pass = Util.getUserPassPrefs(preferences);
 
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)){
-            Log.i(TAG, "Email: "+email);
-            Log.i(TAG, "Email: "+pass);
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)) {
+            Log.i(TAG, "Email: " + email);
+            Log.i(TAG, "Email: " + pass);
             startActivity(new Intent(getApplicationContext(), ActivityDashboard.class));
             finish();
         }
@@ -98,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
 
-                    if(bandera.equals("google")){
+                    if (bandera.equals("google")) {
                         goMainScreen();
                     }
 
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
     }
 
-    public void  gui(){
+    public void gui() {
         editUsername = findViewById(R.id.username);
         editPassword = findViewById(R.id.password);
         texto3 = findViewById(R.id.txtdonhaveAccunt);
@@ -117,12 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button2.setOnClickListener(this);
         button = findViewById(R.id.login);
         button.setOnClickListener(this);
-
+        checky = findViewById(R.id.checkBox);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button2:
                 bandera = "google";
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
@@ -134,12 +137,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-    public void login(){
+
+    public void login() {
         login = new ModeloLogin();
         login.setCorreo(editUsername.getText().toString());
         login.setContracena(editPassword.getText().toString());
 
-        if(logn(login.getCorreo(), login.getContracena())){
+        if (logn(login.getCorreo(), login.getContracena())) {
             singnIn(login.getCorreo(), login.getContracena());
         }
     }
@@ -152,44 +156,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void singnIn(final String email, final String pass) {
 
-            authUserPass.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    button.setVisibility(View.VISIBLE);
-                    if (task.isSuccessful()) {
-                        FirebaseUser user2 = authUserPass.getCurrentUser();
-                        if (user2.isEmailVerified()) {
+        authUserPass.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                button.setVisibility(View.VISIBLE);
+                if (task.isSuccessful()) {
+                    FirebaseUser user2 = authUserPass.getCurrentUser();
+                    if (user2.isEmailVerified()) {
 
-                            goMainWithEmail(email, pass);
+                        goMainWithEmail(email, pass);
 
-                        } else {
-                            Toast.makeText(MainActivity.this, "la cuenta no ha sido iniciada", Toast.LENGTH_SHORT).show();
-                        }
                     } else {
-                        Toast.makeText(MainActivity.this, "Error al iniciar", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "la cuenta no ha sido iniciada", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(MainActivity.this, "Error al iniciar", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
 
     }
 
     private void goMainWithEmail(String email, String pass) {
 
-            Toast.makeText(MainActivity.this, "Iniciando...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Iniciando...", Toast.LENGTH_SHORT).show();
+        if (checky.isChecked()) {
             saveOnPreferences(email, pass);
             startActivity(new Intent(getApplicationContext(), ActivityDashboard.class));
             finish();
+        } else {
+            startActivity(new Intent(getApplicationContext(), ActivityDashboard.class));
+            finish();
+        }
 
     }
 
     private boolean logn(String email, String pass) {
-        if(!isValidEmail(email)){
+        if (!isValidEmail(email)) {
             Toast.makeText(this, "Correo inválido, inténtalo de nuevo", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!isValidPass(pass)){
+        } else if (!isValidPass(pass)) {
             Toast.makeText(this, "Tu contraseña es de al menos 6 caracteres, inténtalo de nuevo", Toast.LENGTH_SHORT).show();
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -221,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             handleSignInResult(result);
         }
     }
+
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             firebaseAuthWithGoogle(result.getSignInAccount());
@@ -249,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
     private void updateUI(Object o) {
     }
 
@@ -259,14 +270,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
         authGoogle.addAuthStateListener(googleListener);
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleSignInClient);
-        if(opr.isDone()){
+        if (opr.isDone()) {
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
             goMainScreen();

@@ -1,16 +1,20 @@
 package kevin.com.proyecto01.view;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import kevin.com.proyecto01.ActivityDashboard;
 import kevin.com.proyecto01.R;
 
 public class Recibir extends AppCompatActivity {
@@ -49,6 +53,6 @@ public class Recibir extends AppCompatActivity {
         getSupportActionBar().setTitle(tittle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
         CollapsingToolbarLayout colla = findViewById(R.id.collapsing);
-
     }
 }
+
