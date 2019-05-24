@@ -179,10 +179,8 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
             @Override
             public void onResult(@NonNull Status status) {
                 if (status.isSuccess()) {
-                    goLogInScreen();
                     removeSharedPreferences();
-                } else {
-                    Toast.makeText(getActivity(), "nooo perro", Toast.LENGTH_SHORT).show();
+                    goLogInScreen();
                 }
             }
         });

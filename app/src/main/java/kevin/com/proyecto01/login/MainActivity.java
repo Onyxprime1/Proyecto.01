@@ -212,6 +212,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveOnPreferences(String email, String pass) {
+
+
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("email", email);
         editor.putString("pass", pass);
