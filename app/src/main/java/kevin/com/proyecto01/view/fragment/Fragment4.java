@@ -42,6 +42,7 @@ public class Fragment4 extends Fragment {
        cargarListaChats();
        initRecycler();
        return view;
+       
     }
 
     public void cargarListaChats(){
