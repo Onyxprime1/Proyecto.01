@@ -44,8 +44,10 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayout4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:theme="@style/Editexwhite"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -59,16 +61,13 @@
                 android:ems="10"
                 android:hint="Correo electrónico"
                 android:inputType="textPersonName"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                android:textSize="18sp" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayout3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
@@ -85,10 +84,8 @@
                 android:ems="10"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/username" />
+                android:textSize="18sp" />
+
 
         </android.support.design.widget.TextInputLayout>
 
@@ -137,13 +134,17 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
             android:onClick="registro"
             android:text="¿No tienes una cuenta? Creala aquí."
             android:textColor="@color/texto"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+
 
         <TextView
             android:id="@+id/textView2"
