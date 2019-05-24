@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="3dp"
+    app:cardBackgroundColor="#523229"
+    app:cardCornerRadius="10dp">
+
+    <TextView
+        android:id="@+id/txt_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mi primer html"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:layout_margin="20dp"/>
+    <CheckBox
+        android:id="@+id/Chbox_favorito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkbox_selector"
+        android:layout_gravity="end|right"
+        android:layout_margin="20dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp">
+    <ImageView
+        android:id="@+id/img_vistas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_remove_red_eye_white_24dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:id="@+id/txt_vistas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:textColor="@color/texto"
+            android:layout_toEndOf="@id/img_vistas"
+            android:textSize="18sp"
+            android:layout_marginStart="5dp"/>
+
+        <ImageView
+            android:id="@+id/img_puntos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/txt_vistas"
+            app:srcCompat="@drawable/ic_star_white_24dp"/>
+        <TextView
+            android:id="@+id/txt_puntos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:textColor="@color/texto"
+            android:layout_toEndOf="@id/img_puntos"
+            android:textSize="18sp"
+            android:layout_marginStart="5dp"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -62,13 +62,17 @@
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recy2"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager_perfil"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
