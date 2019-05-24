@@ -52,9 +52,12 @@ public class Amigos extends Fragment {
 
     public void getDatos(){
 
+        mListaAmigos.add(new AmigosModel("","Luis"));
+        mListaAmigos.add(new AmigosModel("","Carlos"));
+        mListaAmigos.add(new AmigosModel("","Fredy"));
         mListaAmigos.add(new AmigosModel("",""));
-        mListaAmigos.add(new AmigosModel(" ",""));
-        mListaAmigos.add(new AmigosModel(" ",""));
+        mListaAmigos.add(new AmigosModel("",""));
+        mListaAmigos.add(new AmigosModel("",""));
     }
 
 }
