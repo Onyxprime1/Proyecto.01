@@ -18,7 +18,6 @@
         <activity android:name=".view.fragment.Chat" />
         <activity android:name=".view.Recibir"
             android:parentActivityName=".ActivityDashboard">
-
         </activity>
 
         <activity
