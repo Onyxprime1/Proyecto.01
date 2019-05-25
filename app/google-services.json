@@ -1,29 +1,21 @@
 {
   "project_info": {
-    "project_number": "373827445688",
-    "firebase_url": "https://newsocial-b1058.firebaseio.com",
-    "project_id": "newsocial-b1058",
-    "storage_bucket": "newsocial-b1058.appspot.com"
+    "project_number": "115221679381",
+    "firebase_url": "https://noobspace-50f69.firebaseio.com",
+    "project_id": "noobspace-50f69",
+    "storage_bucket": "noobspace-50f69.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:373827445688:android:80ae3e753544f1cc",
+        "mobilesdk_app_id": "1:115221679381:android:80ae3e753544f1cc",
         "android_client_info": {
           "package_name": "kevin.com.proyecto01"
         }
       },
       "oauth_client": [
         {
-          "client_id": "373827445688-ohm152aro788gc7uad54klivecdh2ti2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "kevin.com.proyecto01",
-            "certificate_hash": "2964501774fe53f1c6b1161b1c2d8053ce56f309"
-          }
-        },
-        {
-          "client_id": "373827445688-vb8fqacib8fqvildffp6g7dji1o0pfol.apps.googleusercontent.com",
+          "client_id": "115221679381-72oi2qeijvauf6qvl2i5qsh1crcf09ds.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "kevin.com.proyecto01",
@@ -31,28 +23,36 @@
           }
         },
         {
-          "client_id": "373827445688-2kmji8t53sksh87tj6nks57ns63l2j2u.apps.googleusercontent.com",
+          "client_id": "115221679381-6tf0ubenm4d5tqqftujo4duhpbgufe0v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "kevin.com.proyecto01",
-            "certificate_hash": "57395d31afcde9c7553dd56f663e89c73fb5dada"
+            "certificate_hash": "2ae53d2ab8cc49dff662f5434dbf9d431426fb9a"
           }
         },
         {
-          "client_id": "373827445688-vrcji4p3vacrtarne0flg1ab2o1p2k51.apps.googleusercontent.com",
+          "client_id": "115221679381-tseuea4cucftehopsh2c927slohtt1fk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kevin.com.proyecto01",
+            "certificate_hash": "a2b5744b3c9d600a624feb5f1b3d4253acd5e3e1"
+          }
+        },
+        {
+          "client_id": "115221679381-85jhmdrk70jj84jd4pvu89jbk7mpv35r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBhixs--aUTVDxir9PhJ-eDYSIR18Xn8q0"
+          "current_key": "AIzaSyDjUFHqH3nBChF22PdqaRHYTwVpvpf7xbY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "373827445688-vrcji4p3vacrtarne0flg1ab2o1p2k51.apps.googleusercontent.com",
+              "client_id": "115221679381-85jhmdrk70jj84jd4pvu89jbk7mpv35r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
