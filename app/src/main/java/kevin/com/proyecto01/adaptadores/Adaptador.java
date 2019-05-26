@@ -1,8 +1,10 @@
 package kevin.com.proyecto01.adaptadores;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,24 +13,28 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
+import kevin.com.proyecto01.Database.Entidad.PostEntity;
+import kevin.com.proyecto01.Database.NuevoPostDialogViewModel;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.view.Recibir;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
 
-    ArrayList<ProgramerEntity> lista;
+    List<PostEntity> lista;
     int resouce;
     Activity context;
 
-    public Adaptador(ArrayList<ProgramerEntity> lista, int resouce, Activity context) {
+    private NuevoPostDialogViewModel viewModel;
+
+    public Adaptador(List<PostEntity> lista, int resouce, Activity context) {
         this.lista = lista;
         this.resouce = resouce;
         this.context = context;
+
+        viewModel = ViewModelProviders.of((AppCompatActivity)context).get(NuevoPostDialogViewModel.class);
     }
 
     @NonNull
@@ -42,29 +48,19 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
 
-        viewHolder.bind(lista.get(position), context);
+        viewHolder.bind(lista.get(position), context, viewModel);
 
-
-        ImageView img = viewHolder.img;
-        viewHolder.texto1.setText(lista.get(position).getUserName());
-        viewHolder.texto2.setText(lista.get(position).getTime());
-        viewHolder.texto3.setText(lista.get(position).getLike());
-        Glide.with(context).load(lista.get(position).getImagen()).into(img);
-
-
-        if(lista.get(position).isFavorito()){
+        if(lista.get(position).isFavorite()){
             viewHolder.favorite.setBackgroundResource(R.drawable.ic_favorite_red_24dp);
-            lista.get(position).setFavorito(true);
+            lista.get(position).setFavorite(true);
         }
 
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Recibir.class);
-                intent.putExtra("titulo",lista.get(position).getTime());
-                intent.putExtra("nombre",lista.get(position).getUserName());
-                intent.putExtra("like",lista.get(position).getLike());
-                intent.putExtra("img",lista.get(position).getImagen());
+                intent.putExtra("nombre",lista.get(position).getTitulo());
+                intent.putExtra("like",lista.get(position).getMensaje());
                 context.startActivity(intent);
             }
         });
@@ -75,10 +71,15 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         return lista.size();
     }
 
+    public void setNuevoPost(List<PostEntity> postEntities) {
+        this.lista= postEntities;
+        notifyDataSetChanged();
+    }
+
     public static class  ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView texto1;
-        TextView texto2;
+        TextView txtTitleCardPost;
+        TextView txtMessageCardPost;
         TextView texto3;
         ImageButton favorite;
 
@@ -86,24 +87,26 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
             super(itemView);
 
             img = itemView.findViewById(R.id.imagen1);
-            texto1 = itemView.findViewById(R.id.userNameCard);
-            texto2 = itemView.findViewById(R.id.timecard);
-            texto3 = itemView.findViewById(R.id.likeNumber);
+            txtTitleCardPost = itemView.findViewById(R.id.titleCardPost);
+            txtMessageCardPost = itemView.findViewById(R.id.messageCardPost);
             favorite = itemView.findViewById(R.id.likeCheck);
         }
 
-        public void bind(final ProgramerEntity programerEntity, Activity context) {
+        public void bind(final PostEntity post, Activity context, final NuevoPostDialogViewModel viewModel) {
 
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(programerEntity.isFavorito()){
+                    if(post.isFavorite()){
                         favorite.setBackgroundResource(R.drawable.ic_favorite_border_white_24dp);
-                        programerEntity.setFavorito(false);
+                        post.setFavorite(false);
                     }else{
                         favorite.setBackgroundResource(R.drawable.ic_favorite_red_24dp);
-                        programerEntity.setFavorito(true);
+                        post.setFavorite(true);
                     }
+
+                    viewModel.actualizarPost(post);
+
                 }
             });
         }

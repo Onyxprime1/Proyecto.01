@@ -8,19 +8,17 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
+import kevin.com.proyecto01.Database.Entidad.PostEntity;
 
 @Dao
-public interface ProgramerDao {
-
+public interface PostDao {
 
     @Insert
-    void insertar(ProgramerEntity entity);
+    void insertar(PostEntity entity);
 
     @Update
-    void actualizar(ProgramerEntity entity);
+    void actualizar(PostEntity entity);
 
-    @Query("SELECT * FROM Programador ORDER BY userName")
-    LiveData<List<ProgramerEntity>> getAll();
-
+    @Query("SELECT * FROM PostEntity ORDER BY fecha")
+    LiveData<List<PostEntity>> getAll();
 }

@@ -39,8 +39,8 @@ public class Fragment3 extends Fragment {
        gridLayoutManager = new GridLayoutManager(view.getContext(),2);
         recy3.setHasFixedSize(true);
         recy3.setLayoutManager(gridLayoutManager);
-        adapt = new Adaptador(listade(),R.layout.card_picture,getActivity());
-        recy3.setAdapter(adapt);
+        //adapt = new Adaptador(listade(),R.layout.card_picture,getActivity());
+        //recy3.setAdapter(adapt);
         return view;
     }
 

@@ -94,8 +94,8 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recy2.setLayoutManager(manager);
-        adaptador = new Adaptador(listade(),R.layout.card_picture,getActivity());
-        recy2.setAdapter(adaptador);
+       // adaptador = new Adaptador(listade(),R.layout.card_picture,getActivity());
+        //recy2.setAdapter(adaptador);
         return view;
     }
 

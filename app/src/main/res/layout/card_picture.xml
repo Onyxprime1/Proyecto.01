@@ -27,7 +27,7 @@
             android:paddingBottom="15sp"
             android:background="@color/textColor">
             <TextView
-                android:id="@+id/userNameCard"
+                android:id="@+id/titleCardPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_card"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/firsWord"
+                    android:id="@+id/messageCardPost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/firt_word"
