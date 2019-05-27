@@ -48,7 +48,6 @@ public class Chats_SubFragment extends Fragment {
 
         gui(view);
 
-
         mListaChats = new ArrayList<>();
         //cargarListaChats();
 
