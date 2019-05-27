@@ -79,7 +79,7 @@ public class InicioFragment extends Fragment {
 
 
         mPostReference = Util.getmDatabase().getReference()
-                .child("Post_Content").child(user.getUid());
+                .child("Posts").child(user.getUid());
 
 
         showToolbar("home",view);
@@ -108,7 +108,8 @@ public class InicioFragment extends Fragment {
 
                 if(dataSnapshot.exists()){
 
-                                        
+                    //PostEntity post = dataSnapshot.getValue(PostEntity.class);
+                   // postEntities.add(post);
 
                     adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity());
                     recy.setAdapter(adaptador);

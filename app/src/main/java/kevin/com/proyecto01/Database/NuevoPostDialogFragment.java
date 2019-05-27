@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +39,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
     private FirebaseUser user;
     private String id_user;
 
-    private List<PostEntity> listaPosts;
+    private List<PostEntity> listaPosts = new ArrayList<>();
 
     private FirebaseDatabase database;
 
@@ -52,9 +53,6 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
 
         database = Util.getmDatabase();
-
-        listaPosts = new ArrayList<>();
-
     }
 
     @NonNull
@@ -71,8 +69,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
         final EditText editTitlePost = view.findViewById(R.id.tema_post);
         final EditText editMessagePost = view.findViewById(R.id.message_post);
-        ImageView imageImage = view.findViewById(R.id.imageImage);
-        ImageView imageDocument = view.findViewById(R.id.imageDocuments);
+
 
         builder.setView(view);
 
@@ -115,17 +112,29 @@ public class NuevoPostDialogFragment extends DialogFragment {
         return builder.create();
     }
 
+
+
     private void upModelToFirebase(final PostEntity postEntity) {
 
         final DatabaseReference reference = database.getReference();
+        final DatabaseReference referencePostList = database.getReference();
 
+        reference.child("Posts").child(id_user).setValue(id_user);
 
-        reference.child("Posts").setValue(id_user);
+        FirebaseDatabase.getInstance().getReference().child("Posts").child(id_user)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                        PostEntity postEntity1 = dataSnapshot.getValue(PostEntity.class);
+                        reference.push().setValue(postEntity1);
+                    }
 
-        listaPosts.add(postEntity);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        reference.child("Post_Content").child(id_user).setValue(listaPosts);
+                    }
+                });
 
     }
 
