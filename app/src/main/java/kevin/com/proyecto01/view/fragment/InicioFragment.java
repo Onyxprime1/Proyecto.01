@@ -4,6 +4,7 @@ package kevin.com.proyecto01.view.fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +32,21 @@ import kevin.com.proyecto01.Database.Entidad.PostEntity;
 import kevin.com.proyecto01.Database.NuevoPostDialogFragment;
 import kevin.com.proyecto01.Database.NuevoPostDialogViewModel;
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.adaptadores.Adaptador;
 import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment1 extends Fragment {
+public class InicioFragment extends Fragment {
+
+    private DatabaseReference mPostReference;
+    private FirebaseUser user;
+
+
+    private ValueEventListener postListener;
+
 
     private FloatingActionButton fab;
 
@@ -41,7 +58,7 @@ public class Fragment1 extends Fragment {
 
     private NuevoPostDialogViewModel viewModel;
 
-    public Fragment1() {
+    public InicioFragment() {
         // Required empty public constructor
     }
 
@@ -52,9 +69,18 @@ public class Fragment1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment1, container, false);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
         postEntities = new ArrayList<>();
 
         fab = view.findViewById(R.id.fab);
+
+
+
+        mPostReference = Util.getmDatabase().getReference()
+                .child("Post_Content").child(user.getUid());
+
 
         showToolbar("home",view);
         recy = view.findViewById(R.id.recy);
@@ -64,12 +90,6 @@ public class Fragment1 extends Fragment {
         recy.setLayoutManager(manager);
 
 
-
-        adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity());
-        recy.setAdapter(adaptador);
-
-        lanzarViewModel();
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +98,32 @@ public class Fragment1 extends Fragment {
                 dialogFragment.show(fragmentManager, "NuevoPostDialogFragment");
             }
         });
+
+
+        mPostReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                postEntities.clear();
+
+                if(dataSnapshot.exists()){
+
+                                        
+
+                    adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity());
+                    recy.setAdapter(adaptador);
+
+                    lanzarViewModel();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         return view;
     }

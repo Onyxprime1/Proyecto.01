@@ -20,13 +20,13 @@ import kevin.com.proyecto01.modelos.ChatsModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment4 extends Fragment {
+public class ChatFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     AdaptadorChats mAdaptadorChats;
     ArrayList<ChatsModel> mListaChats;
     Toolbar mToolbar;
-    public Fragment4() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 

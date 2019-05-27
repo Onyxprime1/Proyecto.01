@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragment.Fragment4">
+    tools:context=".view.fragment.ChatFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/bar_layout"

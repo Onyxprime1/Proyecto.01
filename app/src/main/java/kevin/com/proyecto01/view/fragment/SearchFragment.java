@@ -20,13 +20,13 @@ import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
  *
  * A simple {@link Fragment} subclass.
  */
-public class Fragment3 extends Fragment {
+public class SearchFragment extends Fragment {
 
     RecyclerView recy3;
     Adaptador adapt;
     GridLayoutManager gridLayoutManager;
 
-    public Fragment3() {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
