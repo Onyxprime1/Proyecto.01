@@ -56,7 +56,7 @@ public class Fragment1 extends Fragment {
 
         fab = view.findViewById(R.id.fab);
 
-        showToolbar("home",view);
+        showToolbar("NoobSpace",view);
         recy = view.findViewById(R.id.recy);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());

@@ -35,7 +35,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.nuevo_post_dialog_fragment, null);
+       /* final View view = inflater.inflate(R.layout.nuevo_post_dialog_fragment, null);
 
         final EditText editTitlePost = view.findViewById(R.id.tema_post);
         final EditText editMessagePost = view.findViewById(R.id.message_post);
@@ -65,7 +65,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        });
+        });*/
 
 
 

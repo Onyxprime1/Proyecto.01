@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.Fragment4">
 
     <android.support.design.widget.AppBarLayout
@@ -21,17 +21,18 @@
             android:contextClickable="false"
             android:textAlignment="viewStart"
             app:contentInsetStartWithNavigation="@dimen/size"
-            app:navigationIcon="@drawable/ic_navigate_before_black_24dp"
             app:popupTheme="@style/AppTheme.AppBarOverlay">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/size"
-                android:layout_height="@dimen/size"
+                android:id="@+id/fperfil"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:elevation="5dp"
                 android:src="@drawable/aaab" />
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
@@ -39,13 +40,24 @@
 
 
         </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:tabIndicatorColor="@color/texto"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/texto" />
+
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_chats"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"/>
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
 </LinearLayout>
