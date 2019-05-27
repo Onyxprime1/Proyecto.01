@@ -37,7 +37,6 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
         viewHolder.mNombre.setText(mListaChats.get(i).getNombre());
         viewHolder.mMensaje.setText(mListaChats.get(i).getMensaje());
         viewHolder.mFecha.setText(mListaChats.get(i).getFecha());

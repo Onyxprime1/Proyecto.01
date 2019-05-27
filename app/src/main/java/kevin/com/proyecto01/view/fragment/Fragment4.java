@@ -64,9 +64,11 @@ public class Fragment4 extends Fragment {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
                 if (user != null) {
                     setUserData(user);
                 }
+
             }
         };
         showToolbar("");
@@ -82,38 +84,7 @@ public class Fragment4 extends Fragment {
 
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titulo;
-
-        public ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-            this.fragments = new ArrayList<>();
-            this.titulo = new ArrayList<>();
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            return fragments.get(i);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        public void addFragment(Fragment fragment, String tit) {
-            fragments.add(fragment);
-            titulo.add(tit);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titulo.get(position);
-        }
-    }
 
     public void gui(View view) {
         fotoPerfil = view.findViewById(R.id.fperfil);
@@ -152,4 +123,37 @@ public class Fragment4 extends Fragment {
         }
     }
 
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private ArrayList<Fragment> fragments;
+        private ArrayList<String> titulo;
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fragments = new ArrayList<>();
+            this.titulo = new ArrayList<>();
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragments.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        public void addFragment(Fragment fragment, String tit) {
+            fragments.add(fragment);
+            titulo.add(tit);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titulo.get(position);
+        }
+    }
 }
