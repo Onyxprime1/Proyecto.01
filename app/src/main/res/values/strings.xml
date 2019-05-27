@@ -16,7 +16,7 @@
     <string name="firt_word">give power</string>
     <string name="time">4 dias</string>
     <string name="like">10 Me gusta</string>
-
+    <string name="mensaje">Escribir mensaje...</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lore"> En el pasado distante, una raza de muy avanzada tecnología,
         conocida como los Forerunner, luchó contra una especie parásita llamada Flood. Esta, que se propaga mediante la infestación de otras formas de vida,
@@ -46,4 +46,10 @@ En 2552, el Covenant llega a Reach, la última fortaleza de la UNSC además de l
         Cortana revela que la activación del anillo conllevaría su propia destrucción. El Jefe Maestro y Cortana deciden detonar los motores del Pillar of Autumn,
         destruyendo el Halo en el proceso y previniendo así el escape de los Flood.</string>
     <string name="tramsiton">trancition</string>
+    <string name="title_activity_preuba_wey">PreubaWey</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_prueba_de_manifest">PruebaDeManifest</string>
+    <string name="title_activity_dashboard">ActivityDashboard</string>
 </resources>

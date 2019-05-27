@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.Fragment1">
+    tools:context=".view.fragment.InicioFragment">
 
-    <include
-        layout="@layout/actionbar_tulbar"
-        android:id="@+id/prueba"/>
+    <include layout="@layout/actionbar_tulbar"
+        android:id="@+id/prueba"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recy"

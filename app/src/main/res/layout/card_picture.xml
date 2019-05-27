@@ -6,8 +6,7 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardimagen"
     cardview:cardCornerRadius="5dp"
-    android:layout_margin="10dp"
-    >
+    android:layout_margin="10dp">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,7 +27,7 @@
             android:paddingBottom="15sp"
             android:background="@color/textColor">
             <TextView
-                android:id="@+id/userNameCard"
+                android:id="@+id/titleCardPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_card"
@@ -38,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/firsWord"
+                    android:id="@+id/messageCardPost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/firt_word"
@@ -58,12 +57,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_margin="10dp">
-                <CheckBox
+                <ImageButton
                     android:id="@+id/likeCheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/checkbox_selector"
-                    />
+                    android:background="@drawable/ic_favorite_border_white_24dp"
+                     />
                 <TextView
                     android:id="@+id/likeNumber"
                     android:layout_width="wrap_content"

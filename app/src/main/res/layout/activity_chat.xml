@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.Chat">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_chat"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_bar"
+            android:layout_alignTop="@+id/bar_layout"
+            android:contextClickable="false"
+            android:textAlignment="viewStart"
+            app:contentInsetStartWithNavigation="@dimen/size"
+            app:navigationIcon="@drawable/ic_navigate_before_black_24dp"
+            app:popupTheme="@style/AppTheme.AppBarOverlay">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/size"
+                android:layout_height="@dimen/size"
+                android:layout_marginEnd="10dp"
+                android:elevation="5dp"
+                android:src="@drawable/aaab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textColor="@color/texto" />
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+   <ListView
+       android:id="@+id/list_view"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:layout_gravity="center_vertical"
+       android:layout_below="@+id/bar_layout"
+       android:layout_above="@+id/linear"
+       android:scrollbars="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/edt_message"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="10"
+            android:background="@drawable/edit_text_style"
+            android:hint="@string/mensaje"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="20dp" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_enviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_send_black_24dp"
+            android:elevation="5dp"/>
+
+    </LinearLayout>
+</RelativeLayout>

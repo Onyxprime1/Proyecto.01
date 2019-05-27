@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".view.fragment.Fragment2">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.ProfileFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarProfile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="270dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:background="@color/colorPrimary">
@@ -20,8 +20,16 @@ tools:context=".view.fragment.Fragment2">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:statusBarScrim="@color/colorPrimary"
+            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <ImageView
+                android:id="@+id/fondo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/aaab"
+                app:layout_collapseMode="parallax"
+                android:transitionName="@string/tramsiton"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +39,8 @@ tools:context=".view.fragment.Fragment2">
                 android:layout_gravity="center|top"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:gravity="center">
+                android:gravity="center"
+                android:background="@color/textColor">
 
                 <TextView
                     android:id="@+id/userFragmen2"
@@ -46,10 +55,9 @@ tools:context=".view.fragment.Fragment2">
                 android:id="@+id/toolbar3"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:layout_collapseMode="pin">
 
             </android.support.v7.widget.Toolbar>
 
@@ -64,6 +72,7 @@ tools:context=".view.fragment.Fragment2">
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/foto"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:src="@drawable/aaab"
