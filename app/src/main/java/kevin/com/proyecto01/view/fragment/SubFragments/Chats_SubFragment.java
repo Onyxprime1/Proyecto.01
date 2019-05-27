@@ -52,7 +52,6 @@ public class Chats_SubFragment extends Fragment {
         mListaChats = new ArrayList<>();
         //cargarListaChats();
 
-
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("noobspace-50f69");
 
