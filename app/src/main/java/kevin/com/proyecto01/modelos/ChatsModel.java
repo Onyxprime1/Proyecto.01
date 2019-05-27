@@ -16,6 +16,9 @@ public class ChatsModel {
         this.numero = numero;
     }
 
+    public ChatsModel() {
+    }
+
     public String getImagenPerfil() {
         return imagenPerfil;
     }

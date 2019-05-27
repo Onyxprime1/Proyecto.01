@@ -1,6 +1,7 @@
 package kevin.com.proyecto01;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import kevin.com.proyecto01.view.fragment.ActivityPrueba;
 import kevin.com.proyecto01.view.fragment.Fragment1;
 import kevin.com.proyecto01.view.fragment.Fragment2;
 import kevin.com.proyecto01.view.fragment.Fragment3;
@@ -45,7 +47,9 @@ public class ActivityDashboard extends AppCompatActivity {
 
 
                 case R.id.chats:
-                    fragment = new Fragment4();
+                    Intent intent = new Intent(getApplicationContext(), ActivityPrueba.class);
+                    startActivity(intent);
+                    /*fragment = new Fragment4();*/
                     item.setChecked(mState);
                     break;
 

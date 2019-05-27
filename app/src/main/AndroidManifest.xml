@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.fragment.ActivityPrueba"></activity>
         <activity
             android:name=".ActivityDashboard"
-            android:label="@string/title_activity_dashboard"></activity>
+            android:label="@string/title_activity_dashboard" />
         <activity android:name=".view.fragment.Chat" />
-        <activity android:name=".view.Recibir"
-            android:parentActivityName=".ActivityDashboard">
-        </activity>
-
+        <activity
+            android:name=".view.Recibir"
+            android:parentActivityName=".ActivityDashboard"></activity>
         <activity
             android:name=".login.Acounnt"
             android:parentActivityName=".login.MainActivity"
