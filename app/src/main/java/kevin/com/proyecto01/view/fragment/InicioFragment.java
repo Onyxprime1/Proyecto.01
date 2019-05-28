@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +59,7 @@ public class InicioFragment extends Fragment {
     private List<PostEntity> postEntities;
 
     private NuevoPostDialogViewModel viewModel;
+    private String TAG = "InicioFragment";
 
     public InicioFragment() {
         // Required empty public constructor
@@ -77,12 +80,11 @@ public class InicioFragment extends Fragment {
         fab = view.findViewById(R.id.fab);
 
 
-
         mPostReference = Util.getmDatabase().getReference()
                 .child("Posts").child(user.getUid());
 
 
-        showToolbar("home",view);
+        showToolbar("home", view);
         recy = view.findViewById(R.id.recy);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -100,22 +102,37 @@ public class InicioFragment extends Fragment {
         });
 
 
-        mPostReference.addValueEventListener(new ValueEventListener() {
+        mPostReference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                postEntities.clear();
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 if(dataSnapshot.exists()){
-
-                    //PostEntity post = dataSnapshot.getValue(PostEntity.class);
-                   // postEntities.add(post);
+                    PostEntity postByUser = dataSnapshot.getValue(PostEntity.class);
+                    postEntities.add(postByUser);
 
                     adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity());
                     recy.setAdapter(adaptador);
-
-                    lanzarViewModel();
                 }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    PostEntity postElimiado = dataSnapshot.getValue(PostEntity.class);
+                    adaptador.removeItem(postElimiado.getId());
+                }
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
@@ -142,7 +159,7 @@ public class InicioFragment extends Fragment {
 
     }
 
-    public void showToolbar(String tittle,View view) {
+    public void showToolbar(String tittle, View view) {
 
         AppCompatActivity activi = (AppCompatActivity) getActivity();
         mytoolbar = view.findViewById(R.id.toolbars);

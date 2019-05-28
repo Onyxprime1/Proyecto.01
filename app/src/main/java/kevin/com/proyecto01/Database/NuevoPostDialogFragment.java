@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,22 +69,22 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Log.i(TAG, "Hijo cambiado");
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                Log.i(TAG, "Hijo removido");
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Log.i(TAG, "Hijo movido");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.i(TAG, "Hijo cancelado");
             }
         });
 
@@ -112,8 +113,8 @@ public class NuevoPostDialogFragment extends DialogFragment {
         builder.setPositiveButton("Publicar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String titulo = editMessagePost.getText().toString();
-                String mensaje = editTitlePost.getText().toString();
+                String titulo = editTitlePost.getText().toString();
+                String mensaje = editMessagePost.getText().toString();
 
                 if(entradasValidas(titulo, mensaje)){
                     mViewModel = ViewModelProviders.of(getActivity()).get(NuevoPostDialogViewModel.class);
@@ -121,7 +122,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
                     Log.e(TAG, id_user );
 
-                    PostEntity postEntity = new PostEntity(titulo, mensaje, id_user, "", "", "");
+                    PostEntity postEntity = new PostEntity(titulo, id_user, mensaje, "", "", "");
 
 
                     upModelToFirebase(postEntity);
