@@ -50,9 +50,43 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
+        id_user = user.getUid();
 
         database = Util.getmDatabase();
+
+
+        DatabaseReference reference = Util.getmDatabase().getReference();
+
+        reference.child("Posts").child(id_user).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.exists()){
+                   PostEntity posts = dataSnapshot.getValue(PostEntity.class);
+                   listaPosts.add(posts);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @NonNull
@@ -84,7 +118,6 @@ public class NuevoPostDialogFragment extends DialogFragment {
                 if(entradasValidas(titulo, mensaje)){
                     mViewModel = ViewModelProviders.of(getActivity()).get(NuevoPostDialogViewModel.class);
 
-                    id_user = user.getUid();
 
                     Log.e(TAG, id_user );
 
@@ -116,25 +149,15 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
     private void upModelToFirebase(final PostEntity postEntity) {
 
-        final DatabaseReference reference = database.getReference();
-        final DatabaseReference referencePostList = database.getReference();
+        final DatabaseReference reference = Util.getmDatabase().getReference();
+
+        listaPosts.add(postEntity);
+
 
         reference.child("Posts").child(id_user).setValue(id_user);
 
-        FirebaseDatabase.getInstance().getReference().child("Posts").child(id_user)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        reference.child("Posts").child(id_user).setValue(listaPosts);
 
-                        PostEntity postEntity1 = dataSnapshot.getValue(PostEntity.class);
-                        reference.push().setValue(postEntity1);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
 
     }
 
