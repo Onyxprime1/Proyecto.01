@@ -34,7 +34,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         this.resouce = resouce;
         this.context = context;
 
-        viewModel = ViewModelProviders.of((AppCompatActivity)context).get(NuevoPostDialogViewModel.class);
+        //viewModel = ViewModelProviders.of((AppCompatActivity)context).get(NuevoPostDialogViewModel.class);
     }
 
     @NonNull
@@ -76,6 +76,14 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void removeItem(int id) {
+        for(int i = 0; i < lista.size(); i++){
+            if(id == lista.get(i).getId()){
+                lista.remove(i);
+            }
+        }
+    }
+
     public static class  ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
         TextView txtTitleCardPost;
@@ -93,6 +101,11 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         }
 
         public void bind(final PostEntity post, Activity context, final NuevoPostDialogViewModel viewModel) {
+
+
+            txtTitleCardPost.setText(post.getTitulo());
+            txtMessageCardPost.setText(post.getMensaje());
+
 
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override

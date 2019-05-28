@@ -11,12 +11,10 @@ public class ModeloLogin {
     }
 
 
-    public ModeloLogin(String nombre, String apellido, String correo, String contracena, String confirmacion) {
+    public ModeloLogin(String nombre, String apellido, String correo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
-        this.contracena = contracena;
-        this.confirmacion = confirmacion;
     }
 
     public String getNombre() {

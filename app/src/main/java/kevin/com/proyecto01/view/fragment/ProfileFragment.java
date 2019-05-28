@@ -29,8 +29,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 
@@ -43,7 +46,7 @@ import kevin.com.proyecto01.login.MainActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+public class ProfileFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private SharedPreferences preferences;
 
@@ -52,6 +55,7 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
     private GoogleApiClient googleApiClient;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private AuthCredential credential;
     private CircleImageView circle;
     private TextView texto;
     private ImageView img;
@@ -74,6 +78,7 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
                 .build();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -160,9 +165,16 @@ public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionF
                 logOut();
                 //startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
+
+            case R.id.vinculo:
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
     @Override
     public void onStop() {

@@ -12,6 +12,7 @@ public class PostEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String titulo;
+    private String propietario;
     private String mensaje;
     private String documento;
     private String imagen;
@@ -19,9 +20,12 @@ public class PostEntity {
     private boolean favorite;
     private int numLikes;
 
-    public PostEntity(String titulo, String mensaje, String documento, String imagen, String fecha) {
+    public PostEntity(){}
+
+    public PostEntity(String titulo, String propietario, String mensaje, String documento, String imagen, String fecha) {
         this.titulo = titulo;
         this.mensaje = mensaje;
+        this.propietario = propietario;
         this.documento = documento;
         this.imagen = imagen;
         this.fecha = fecha;
@@ -91,5 +95,13 @@ public class PostEntity {
 
     public void setNumLikes(int numLikes) {
         this.numLikes = numLikes;
+    }
+
+    public String getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(String propietario) {
+        this.propietario = propietario;
     }
 }
