@@ -24,13 +24,15 @@
             app:popupTheme="@style/AppTheme.AppBarOverlay">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/size"
-                android:layout_height="@dimen/size"
+                android:id="@+id/perfil"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:elevation="5dp"
                 android:src="@drawable/aaab" />
 
             <TextView
+                android:id="@+id/nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
@@ -60,7 +62,7 @@
         android:layout_marginBottom="5dp"
         android:layout_alignParentBottom="true">
 
-        <EditText
+        <!--<EditText
             android:id="@+id/edt_message"
             android:layout_width="0dp"
             android:layout_height="@dimen/size"
@@ -80,8 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/colorAccent"
-            android:src="@drawable/ic_send_black_24dp"
-            android:elevation="5dp"/>
+            android:elevation="5dp"/>-->
 
     </LinearLayout>
 </RelativeLayout>

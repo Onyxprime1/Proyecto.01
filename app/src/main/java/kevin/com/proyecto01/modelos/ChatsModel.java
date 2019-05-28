@@ -6,14 +6,12 @@ public class ChatsModel {
     private String nombre;
     private String mensaje;
     private String fecha;
-    private int numero;
 
-    public ChatsModel(String imagenPerfil, String nombre, String mensaje, String fecha, int numero) {
+    public ChatsModel(String imagenPerfil, String nombre, String mensaje, String fecha) {
         this.imagenPerfil = imagenPerfil;
         this.nombre = nombre;
         this.mensaje = mensaje;
         this.fecha = fecha;
-        this.numero = numero;
     }
 
     public ChatsModel() {
@@ -45,17 +43,5 @@ public class ChatsModel {
 
     public String getFecha() {
         return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 }
