@@ -76,10 +76,13 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void removeItem(int id) {
+    public void removeItem(String title) {
         for(int i = 0; i < lista.size(); i++){
-            if(id == lista.get(i).getId()){
+
+            if(title.equals(lista.get(i).getTitulo())){
                 lista.remove(i);
+                notifyItemRemoved(i);
+                notifyDataSetChanged();
             }
         }
     }
