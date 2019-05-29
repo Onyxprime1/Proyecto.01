@@ -13,12 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
 import kevin.com.proyecto01.Database.Entidad.PostEntity;
 import kevin.com.proyecto01.Database.NuevoPostDialogViewModel;
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.view.Recibir;
 
 public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
@@ -27,13 +31,19 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     int resouce;
     Activity context;
 
+    private String idUser;
+
+
+    private DatabaseReference mDatabasereferene;
+
     private NuevoPostDialogViewModel viewModel;
 
-    public Adaptador(List<PostEntity> lista, int resouce, Activity context) {
+    public Adaptador(List<PostEntity> lista, int resouce, Activity context, String user) {
         this.lista = lista;
         this.resouce = resouce;
         this.context = context;
 
+        this.idUser = user;
         //viewModel = ViewModelProviders.of((AppCompatActivity)context).get(NuevoPostDialogViewModel.class);
     }
 
@@ -55,13 +65,29 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
             lista.get(position).setFavorite(true);
         }
 
-        viewHolder.img.setOnClickListener(new View.OnClickListener() {
+       /* viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Recibir.class);
                 intent.putExtra("nombre",lista.get(position).getTitulo());
                 intent.putExtra("like",lista.get(position).getMensaje());
                 context.startActivity(intent);
+            }
+        });*/
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Tocaste: "+position, Toast.LENGTH_SHORT).show();
+
+                mDatabasereferene = Util.getmDatabase().getReference();
+
+                mDatabasereferene.child("Posts").child(idUser).child(Integer.toString(position)).removeValue();
+
+                lista.remove(position);
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+
             }
         });
     }
@@ -76,10 +102,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void removeItem(String title) {
-        for(int i = 0; i < lista.size(); i++){
+    public void removeItem(String titulo, String title, List<PostEntity> postEntities) {
+        for(int i = 0; i < postEntities.size(); i++){
 
-            if(title.equals(lista.get(i).getTitulo())){
+            if(title.equals(postEntities.get(i).getPosition())){
                 lista.remove(i);
                 notifyItemRemoved(i);
                 notifyDataSetChanged();
@@ -101,6 +127,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
             txtTitleCardPost = itemView.findViewById(R.id.titleCardPost);
             txtMessageCardPost = itemView.findViewById(R.id.messageCardPost);
             favorite = itemView.findViewById(R.id.likeCheck);
+
         }
 
         public void bind(final PostEntity post, Activity context, final NuevoPostDialogViewModel viewModel) {

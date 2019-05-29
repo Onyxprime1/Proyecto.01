@@ -107,10 +107,11 @@ public class InicioFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 if(dataSnapshot.exists()){
+
                     PostEntity postByUser = dataSnapshot.getValue(PostEntity.class);
                     postEntities.add(postByUser);
 
-                    adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity());
+                    adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity(), user.getUid() );
                     recy.setAdapter(adaptador);
                 }
 
@@ -118,15 +119,29 @@ public class InicioFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.exists()){
+                    PostEntity postChange = dataSnapshot.getValue(PostEntity.class);
+                    postChange.setPosition(dataSnapshot.getKey());
+                    postEntities.add(postChange);
 
+                    adaptador = new Adaptador(postEntities, R.layout.card_picture, getActivity(), user.getUid() );
+                    recy.setAdapter(adaptador);
+                }
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
+                String val = dataSnapshot.getKey();
+
+                Log.e(TAG, val);
+
                 if(dataSnapshot.exists()){
                     PostEntity postElimiado = dataSnapshot.getValue(PostEntity.class);
-                    adaptador.removeItem(postElimiado.getTitulo());
+
+                    //Log.e(TAG, postElimiado.getPosition());
+
+                    adaptador.removeItem(postElimiado.getPosition(),val, postEntities);
                 }
 
             }
