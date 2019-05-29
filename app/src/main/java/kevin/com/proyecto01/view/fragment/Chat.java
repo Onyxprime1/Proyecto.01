@@ -1,12 +1,15 @@
 package kevin.com.proyecto01.view.fragment;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
@@ -29,6 +37,8 @@ public class Chat extends AppCompatActivity {
     private TextView nombre;
     Intent intent;
 
+    private FloatingActionButton enviar;
+    private EditText mensaje;
 
     private FirebaseUser fuser;
     private DatabaseReference reference;
@@ -43,11 +53,11 @@ public class Chat extends AppCompatActivity {
 
         intent = getIntent();
         final String username = intent.getStringExtra("username");
-
-        //Toast.makeText(this, "->" +username, Toast.LENGTH_SHORT).show();
+        final Calendar currentTime = Calendar.getInstance();
+        currentTime.set(Calendar.HOUR_OF_DAY, 0);
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference().child("Chats");
+        reference = FirebaseDatabase.getInstance().getReference().child("Usuarios");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -59,8 +69,6 @@ public class Chat extends AppCompatActivity {
                         nombre.setText(user.getNombre());
                     }
                 }
-
-
             }
 
             @Override
@@ -68,12 +76,39 @@ public class Chat extends AppCompatActivity {
 
             }
         });
+
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mensaje.getText().toString().equals("")) {
+                    sendMenssage(fuser.getUid(), username, currentTime.toString());
+                }
+                mensaje.setText("");
+            }
+        });
+
+
+    }
+
+    private void sendMenssage(String emisor, String receptor, String hora) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        Map<String, String> chatMap = new HashMap<>();
+        chatMap.put("emisor", emisor);
+        chatMap.put("receptor", receptor);
+        chatMap.put("hora", hora);
+
+        reference.child("Chats").push().setValue(chatMap);
     }
 
     public void gui() {
         perfil = findViewById(R.id.perfil);
-
         nombre = findViewById(R.id.nombre);
+
+        enviar = findViewById(R.id.btn_enviar);
+        mensaje = findViewById(R.id.edt_message);
+
         mToolbarChat = findViewById(R.id.toolbar_chat);
     }
 

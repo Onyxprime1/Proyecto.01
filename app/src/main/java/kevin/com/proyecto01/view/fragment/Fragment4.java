@@ -62,7 +62,7 @@ public class Fragment4 extends Fragment {
 
         gui(view);
         mListaChats = new ArrayList<>();
-        //-------------------------
+        //------------------------- DATOS DE USUARIO LOGEADO
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -75,32 +75,13 @@ public class Fragment4 extends Fragment {
 
             }
         };
-        //-------------------------
+        //------------------------- CARGAR USUARIOS
 
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
 
-/*
-        Map<String, String> chatMap = new HashMap<>();
-        chatMap.put("imagenPerfil", "");
-        chatMap.put("nombre", "Jimina");
-        chatMap.put("mensaje", "Hola");
-        chatMap.put("fecha", "28/05/19");
-
-
-        reference.child("Chats").push().setValue(chatMap);
-
-        Map<String, String> chatMap2 = new HashMap<>();
-        chatMap2.put("imagenPerfil", "");
-        chatMap2.put("nombre", "Jimina 2");
-        chatMap2.put("mensaje", "Hola 2");
-        chatMap2.put("fecha", "28/05/20");*/
-
-
-        //reference.child("Chats").push().setValue(chatMap);
-
-        reference.child("Chats").addValueEventListener(new ValueEventListener() {
+        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mListaChats.clear();
@@ -132,7 +113,7 @@ public class Fragment4 extends Fragment {
     }
 
     public void cargarListaChats(ChatsModel user) {
-        mListaChats.add(new ChatsModel("", user.getNombre(), user.getMensaje(), "28/03/2018"));
+        mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getNombre(), user.getMensaje(), "28/03/2018"));
         mAdaptadorChats.notifyDataSetChanged();
 
     }
