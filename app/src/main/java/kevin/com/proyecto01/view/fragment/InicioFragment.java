@@ -126,7 +126,7 @@ public class InicioFragment extends Fragment {
 
                 if(dataSnapshot.exists()){
                     PostEntity postElimiado = dataSnapshot.getValue(PostEntity.class);
-                    adaptador.removeItem(postElimiado.getId());
+                    adaptador.removeItem(postElimiado.getTitulo());
                 }
 
             }
