@@ -1,6 +1,7 @@
 package kevin.com.proyecto01.adaptadores;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.modelos.ChatsModel;
+import kevin.com.proyecto01.view.fragment.Chat;
 
-public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHolder> {
+public class  AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHolder> {
 
     private ArrayList<ChatsModel> mListaChats;
     Context context;
+    int position = 0;
 
     public AdaptadorChats() {
     }
@@ -33,18 +36,29 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_chats,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_chats, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Glide.with(context).load(mListaChats.get(i).getImagenPerfil()).into(viewHolder.mImgPerfil);
+        viewHolder.mId.setText(mListaChats.get(i).getId());
         viewHolder.mNombre.setText(mListaChats.get(i).getNombre());
         viewHolder.mMensaje.setText(mListaChats.get(i).getMensaje());
         viewHolder.mFecha.setText(mListaChats.get(i).getFecha());
-        viewHolder.mNumero.setText(String.valueOf(mListaChats.get(i).getNumero()));
+        position = i;
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Chat.class);
+                intent.putExtra("id", viewHolder.mId.getText().toString());
+                intent.putExtra("username", viewHolder.mNombre.getText().toString());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -53,12 +67,13 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
         return mListaChats.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImgPerfil;
         private TextView mNombre;
         private TextView mMensaje;
         private TextView mFecha;
-        private TextView mNumero;
+        private TextView mId;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -66,7 +81,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
             mNombre = itemView.findViewById(R.id.txt_username);
             mMensaje = itemView.findViewById(R.id.txt_mensaje);
             mFecha = itemView.findViewById(R.id.txt_fecha);
-            mNumero = itemView.findViewById(R.id.txt_numero);
+            mId = itemView.findViewById(R.id.id);
 
         }
     }

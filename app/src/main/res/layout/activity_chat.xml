@@ -28,7 +28,7 @@
                 android:layout_height="@dimen/size"
                 android:layout_marginEnd="10dp"
                 android:elevation="5dp"
-                android:src="@drawable/aaab" />
+                android:background="@drawable/logo" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_send_black_24dp"
             android:backgroundTint="@color/colorAccent"
             android:src="@drawable/ic_send_black_24dp"
             android:elevation="5dp"/>
