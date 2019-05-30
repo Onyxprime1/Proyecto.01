@@ -9,10 +9,10 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import kevin.com.proyecto01.view.fragment.InicioFragment;
-import kevin.com.proyecto01.view.fragment.ProfileFragment;
-import kevin.com.proyecto01.view.fragment.SearchFragment;
-import kevin.com.proyecto01.view.fragment.ChatFragment;
+import kevin.com.proyecto01.view.fragment.Fragment1;
+import kevin.com.proyecto01.view.fragment.Fragment2;
+import kevin.com.proyecto01.view.fragment.Fragment3;
+import kevin.com.proyecto01.view.fragment.Fragment4;
 
 public class ActivityDashboard extends AppCompatActivity {
 
@@ -28,22 +28,22 @@ public class ActivityDashboard extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.profile:
-                    fragment = new ProfileFragment();
+                    fragment = new Fragment2();
                     item.setChecked(mState);
                     break;
 
                 case R.id.homeFragment:
-                    fragment = new InicioFragment();
+                    fragment = new Fragment1();
                     item.setChecked(mState);
                     break;
                 case R.id.search:
-                    fragment = new SearchFragment();
+                    fragment = new Fragment3();
                     item.setChecked(mState);
                     break;
 
 
                 case R.id.chats:
-                    fragment = new ChatFragment();
+                    fragment = new Fragment4();
                     item.setChecked(mState);
                     break;
 
@@ -72,7 +72,7 @@ public class ActivityDashboard extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.containerDash, new InicioFragment())
+                .replace(R.id.containerDash, new Fragment1())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(null)
                 .commit();

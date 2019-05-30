@@ -24,13 +24,15 @@
             app:popupTheme="@style/AppTheme.AppBarOverlay">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/size"
-                android:layout_height="@dimen/size"
+                android:id="@+id/perfil"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:elevation="5dp"
                 android:background="@drawable/logo" />
 
             <TextView
+                android:id="@+id/nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
@@ -40,8 +42,8 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-   <ListView
-       android:id="@+id/list_view"
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/recy_chat"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
        android:layout_gravity="center_vertical"
@@ -68,7 +70,6 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="10"
-            android:background="@drawable/edit_text_style"
             android:hint="@string/mensaje"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/black"
@@ -81,7 +82,6 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_send_black_24dp"
             android:backgroundTint="@color/colorAccent"
-            android:src="@drawable/ic_send_black_24dp"
             android:elevation="5dp"/>
 
     </LinearLayout>
