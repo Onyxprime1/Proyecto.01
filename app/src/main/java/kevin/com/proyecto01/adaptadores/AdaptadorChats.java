@@ -23,7 +23,8 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
 
     private ArrayList<ChatsModel> mListaChats;
     Context context;
-    int position=0;
+    int position = 0;
+    private String id;
 
     public AdaptadorChats() {
     }
@@ -44,6 +45,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Glide.with(context).load(mListaChats.get(i).getImagenPerfil()).into(viewHolder.mImgPerfil);
+        id = mListaChats.get(i).getId();
         viewHolder.mNombre.setText(mListaChats.get(i).getNombre());
         viewHolder.mMensaje.setText(mListaChats.get(i).getMensaje());
         viewHolder.mFecha.setText(mListaChats.get(i).getFecha());
@@ -53,6 +55,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Chat.class);
+                intent.putExtra("id", id);
                 intent.putExtra("username", viewHolder.mNombre.getText().toString());
                 context.startActivity(intent);
             }

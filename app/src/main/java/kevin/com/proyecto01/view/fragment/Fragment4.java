@@ -113,7 +113,7 @@ public class Fragment4 extends Fragment {
     }
 
     public void cargarListaChats(ChatsModel user) {
-        mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getNombre(), user.getMensaje(), "28/03/2018"));
+        mListaChats.add(new ChatsModel(user.getImagenPerfil(),"id", user.getNombre(), user.getMensaje(), "28/03/2018"));
         mAdaptadorChats.notifyDataSetChanged();
 
     }

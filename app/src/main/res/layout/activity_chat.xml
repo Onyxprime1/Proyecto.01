@@ -42,8 +42,8 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-   <ListView
-       android:id="@+id/list_view"
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/recy_chat"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
        android:layout_gravity="center_vertical"

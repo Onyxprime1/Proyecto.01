@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,7 +31,10 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.adaptadores.AdaptadorChats;
+import kevin.com.proyecto01.adaptadores.AdaptadorMessage;
 import kevin.com.proyecto01.modelos.ChatsModel;
+import kevin.com.proyecto01.modelos.MessageModel;
 
 public class Chat extends AppCompatActivity {
 
@@ -39,6 +45,11 @@ public class Chat extends AppCompatActivity {
 
     private FloatingActionButton enviar;
     private EditText mensaje;
+
+    AdaptadorMessage adaptadorMessage;
+    ArrayList<MessageModel> messageModels;
+
+    RecyclerView mRecyclerView;
 
     private FirebaseUser fuser;
     private DatabaseReference reference;
@@ -53,8 +64,10 @@ public class Chat extends AppCompatActivity {
 
         intent = getIntent();
         final String username = intent.getStringExtra("username");
+        final String id = intent.getStringExtra("id");
         final Calendar currentTime = Calendar.getInstance();
         currentTime.set(Calendar.HOUR_OF_DAY, 0);
+
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("Usuarios");
@@ -68,6 +81,8 @@ public class Chat extends AppCompatActivity {
                     if (user.getNombre().equals(username)) {
                         nombre.setText(user.getNombre());
                     }
+
+                    readMessage(fuser.getUid(), id, user.getImagenPerfil());
                 }
             }
 
@@ -81,23 +96,49 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!mensaje.getText().toString().equals("")) {
-                    sendMenssage(fuser.getUid(), username, currentTime.toString());
+                    sendMenssage(fuser.getUid(), id , mensaje.getText().toString(), currentTime.toString());
                 }
                 mensaje.setText("");
             }
         });
-
+        initRecycler();
 
     }
 
-    private void sendMenssage(String emisor, String receptor, String hora) {
+    private void readMessage(final String emisor, final String receptor, final String imagenUrl) {
+        messageModels = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference().child("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                messageModels.clear();
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    MessageModel msg = data.getValue(MessageModel.class);
+                    if (msg.getReceptor().equals(receptor) && msg.getEmisor().equals(emisor) ||
+                            msg.getReceptor().equals(emisor) && msg.getEmisor().equals(receptor)) {
+                        messageModels.add(msg);
+                    }
+                    adaptadorMessage = new AdaptadorMessage(messageModels, getApplicationContext(), imagenUrl);
+                    mRecyclerView.setAdapter(adaptadorMessage);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void sendMenssage(String emisor, String receptor, String mensaje, String hora) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
         Map<String, String> chatMap = new HashMap<>();
         chatMap.put("emisor", emisor);
         chatMap.put("receptor", receptor);
-        chatMap.put("hora", hora);
+        chatMap.put("mensaje", mensaje);
+        chatMap.put("hora", "");
 
         reference.child("Chats").push().setValue(chatMap);
     }
@@ -110,6 +151,7 @@ public class Chat extends AppCompatActivity {
         mensaje = findViewById(R.id.edt_message);
 
         mToolbarChat = findViewById(R.id.toolbar_chat);
+        mRecyclerView = findViewById(R.id.recy_chat);
     }
 
     public void toolbar() {
@@ -122,6 +164,13 @@ public class Chat extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void initRecycler() {
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     @Override
