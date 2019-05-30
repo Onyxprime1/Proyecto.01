@@ -165,9 +165,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (user2.isEmailVerified()) {
 
                         goMainWithEmail(email, pass);
+                        Log.i(TAG, user2.getUid());
 
                     } else {
-                        Toast.makeText(MainActivity.this, "la cuenta no ha sido iniciada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "La cuenta no ha sido verificada", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Error al iniciar", Toast.LENGTH_SHORT).show();
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount signInAccount) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount signInAccount) {
 
         button2.setVisibility(View.GONE);
         AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
@@ -252,8 +253,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 button2.setVisibility(View.VISIBLE);
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
-
                     FirebaseUser user = authGoogle.getCurrentUser();
+                    Log.i(TAG, user.getUid());
                     updateUI(user);
                 } else {
                     updateUI(null);

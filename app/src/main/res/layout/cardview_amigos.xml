@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    android:layout_margin="4dp"
+    android:elevation="5dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_fotoAmigo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/aaab"
+            android:layout_margin="15dp"
+            app:civ_circle_background_color="@color/black"/>
+
+        <TextView
+            android:id="@+id/txt_nombreAmigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de un amigo"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/civ_fotoAmigo"/>
+    </LinearLayout>
+
+</android.support.design.card.MaterialCardView>

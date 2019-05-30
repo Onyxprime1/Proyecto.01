@@ -1,8 +1,5 @@
 package kevin.com.proyecto01;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,11 +9,10 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import kevin.com.proyecto01.view.fragment.ActivityPrueba;
-import kevin.com.proyecto01.view.fragment.Fragment1;
-import kevin.com.proyecto01.view.fragment.Fragment2;
-import kevin.com.proyecto01.view.fragment.Fragment3;
-import kevin.com.proyecto01.view.fragment.Fragment4;
+import kevin.com.proyecto01.view.fragment.InicioFragment;
+import kevin.com.proyecto01.view.fragment.ProfileFragment;
+import kevin.com.proyecto01.view.fragment.SearchFragment;
+import kevin.com.proyecto01.view.fragment.ChatFragment;
 
 public class ActivityDashboard extends AppCompatActivity {
 
@@ -32,24 +28,22 @@ public class ActivityDashboard extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.profile:
-                    fragment = new Fragment2();
+                    fragment = new ProfileFragment();
                     item.setChecked(mState);
                     break;
 
                 case R.id.homeFragment:
-                    fragment = new Fragment1();
+                    fragment = new InicioFragment();
                     item.setChecked(mState);
                     break;
                 case R.id.search:
-                    fragment = new Fragment3();
+                    fragment = new SearchFragment();
                     item.setChecked(mState);
                     break;
 
 
                 case R.id.chats:
-                    Intent intent = new Intent(getApplicationContext(), ActivityPrueba.class);
-                    startActivity(intent);
-                    /*fragment = new Fragment4();*/
+                    fragment = new ChatFragment();
                     item.setChecked(mState);
                     break;
 
@@ -78,7 +72,7 @@ public class ActivityDashboard extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.containerDash, new Fragment1())
+                .replace(R.id.containerDash, new InicioFragment())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(null)
                 .commit();

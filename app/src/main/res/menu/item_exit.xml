@@ -4,7 +4,13 @@
 
     <item
         android:id="@+id/exit"
-        android:title="cerrar sesion"
+        android:title="Cerrar sesión"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/vinculo"
+        android:title="Vincular esta cuenta a otra"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 </menu>

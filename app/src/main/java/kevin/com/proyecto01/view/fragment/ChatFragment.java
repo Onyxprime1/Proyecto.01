@@ -34,7 +34,7 @@ import kevin.com.proyecto01.view.fragment.SubFragments.Groups_SubFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment4 extends Fragment {
+public class ChatFragment extends Fragment {
 
     Toolbar mToolbar;
 
@@ -48,7 +48,7 @@ public class Fragment4 extends Fragment {
     private ViewPager viewPg;
 
 
-    public Fragment4() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 

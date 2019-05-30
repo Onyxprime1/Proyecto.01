@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,18 +20,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.Util.Util;
 
 
 public class Acounnt extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = "AccountActivityLog";
+    private FirebaseDatabase mDatabase;
+    private FirebaseAuth firebaseAuth;
+
     Toolbar mytoolbar;
-    EditText editText1;
-    EditText editText2;
-    EditText editText3;
-    EditText editText4;
-    EditText editText5;
+    EditText editTextEmail;
+    EditText editTextUser;
+    EditText editTextApellido;
+    EditText editTextPassword;
+    EditText editTextConfPassword;
     FirebaseAuth mAuth;
     ModeloLogin modelo = new ModeloLogin();
     Button mSend;
@@ -41,6 +51,11 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
         gui();
         mSend.setOnClickListener(this);
+
+
+        mDatabase = Util.getmDatabase();
+        firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     public void showToolbar(String tittle, boolean upButton) {
@@ -51,65 +66,89 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public void gui(){
-        editText1 = findViewById(R.id.email);
-        editText2 = findViewById(R.id.user);
-        editText3 = findViewById(R.id.lastname);
-        editText4 = findViewById(R.id.pass);
-        editText5 = findViewById(R.id.confirmpas);
+    public void gui() {
+        editTextEmail = findViewById(R.id.email);
+        editTextUser = findViewById(R.id.user);
+        editTextApellido = findViewById(R.id.lastname);
+        editTextPassword = findViewById(R.id.pass);
+        editTextConfPassword = findViewById(R.id.confirmpas);
         mSend = findViewById(R.id.joinUs);
     }
 
-    public void onClick(View v){
-        modelo.setCorreo(editText1.getText().toString());
-        modelo.setNombre(editText2.getText().toString());
-        modelo.setApellido(editText3.getText().toString());
-        modelo.setContracena(editText4.getText().toString());
-        modelo.setConfirmacion(editText5.getText().toString());
-        switch (v.getId()){
-            case R.id.joinUs:
-                creatAccount(modelo.getCorreo(),modelo.getContracena());
-                break;
+    public void onClick(View v) {
+
+        String user = editTextUser.getText().toString();
+        String email = editTextEmail.getText().toString();
+        String apellido = editTextApellido.getText().toString();
+        String password = editTextPassword.getText().toString();
+        String confPassword = editTextConfPassword.getText().toString();
+
+        if (user.length() > 0 && email.length() > 0 && apellido.length() > 0 && password.length() > 0 && confPassword.length() > 0) {
+
+            if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                if (password.equals(confPassword)) {
+
+
+                    String id = mAuth.getUid();
+                    String urlImage = mAuth.getCurrentUser().getPhotoUrl().toString();
+                    ModeloLogin modelo = new ModeloLogin(user, apellido, email, urlImage, id);
+                    creatAccount(modelo, password);
+                }else{
+                    Toast.makeText(this, "Las contraseñas no coinciden, inténtelo de nuevo", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(this, "El correo no es válido, intentar de nuevo", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Por favor llenar todos los campos para poder registrarse", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
-    public void creatAccount(String email, String pass){
-        mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+    public void creatAccount(final ModeloLogin newUser, String pass) {
+        mAuth.createUserWithEmailAndPassword(newUser.getCorreo(), pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     saveDisplayName();
-                    Toast.makeText(Acounnt.this, "Usario creado", Toast.LENGTH_SHORT).show();
+
+                    writeNewUser(newUser);
+
                     sendEmailVericatio();
-                    startActivity(new Intent(Acounnt.this,MainActivity.class));
-                }else {
+                    startActivity(new Intent(Acounnt.this, MainActivity.class));
+                    Toast.makeText(Acounnt.this, "Usario creado", Toast.LENGTH_SHORT).show();
+                } else {
                     showError("El usuario ya existe");
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Acounnt.this, "El usuario ya existe", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void showError(String msj){
+    private void writeNewUser(ModeloLogin newUser) {
+        String user_id = mAuth.getCurrentUser().getUid();
+
+        DatabaseReference databaseReference = mDatabase.getReference();
+
+        databaseReference.child("Usuarios").child(user_id).setValue(newUser);
+
+    }
+
+    public void showError(String msj) {
         new AlertDialog.Builder(this)
                 .setTitle("Registro Denegado")
                 .setMessage(msj)
-                .setPositiveButton("ok",null)
+                .setPositiveButton("ok", null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
-    public void saveDisplayName(){
-        SharedPreferences preferences = getSharedPreferences("usuario",0);
-        preferences.edit().putString("username",modelo.getNombre()).apply();
+    public void saveDisplayName() {
+        SharedPreferences preferences = getSharedPreferences("usuario", 0);
+        preferences.edit().putString("username", modelo.getNombre()).apply();
     }
-    protected void sendEmailVericatio(){
+
+    protected void sendEmailVericatio() {
         final FirebaseUser user = mAuth.getCurrentUser();
         user.sendEmailVerification().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
