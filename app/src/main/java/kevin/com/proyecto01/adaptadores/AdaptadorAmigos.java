@@ -29,7 +29,7 @@ public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_amigos,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_usuarios,viewGroup,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -44,7 +44,9 @@ public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHo
 
     @Override
     public int getItemCount() {
-        return mListaAmigos.size();
+       return mListaAmigos.size();
+
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

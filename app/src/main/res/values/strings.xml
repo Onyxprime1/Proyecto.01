@@ -52,4 +52,5 @@ En 2552, el Covenant llega a Reach, la última fortaleza de la UNSC además de l
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_prueba_de_manifest">PruebaDeManifest</string>
     <string name="title_activity_dashboard">ActivityDashboard</string>
+    <string name="enviar_solicitud">Enviar Solicitud</string>
 </resources>

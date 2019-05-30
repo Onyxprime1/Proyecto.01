@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.Fragment3">
+    tools:context=".view.fragment.SearchFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/bar_layout"
@@ -39,7 +39,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recy3"
+        android:id="@+id/recyUsuarios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"/>
