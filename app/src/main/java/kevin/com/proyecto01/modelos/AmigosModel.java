@@ -5,6 +5,9 @@ public class AmigosModel {
     private String urlFotoAmigo;
     private String nombreAmigo;
 
+    public AmigosModel() {
+    }
+
     public AmigosModel(String urlFotoAmigo, String nombreAmigo) {
         this.urlFotoAmigo = urlFotoAmigo;
         this.nombreAmigo = nombreAmigo;

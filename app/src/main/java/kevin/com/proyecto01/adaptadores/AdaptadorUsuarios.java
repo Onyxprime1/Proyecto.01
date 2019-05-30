@@ -14,22 +14,23 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.login.ModeloLogin;
 import kevin.com.proyecto01.modelos.AmigosModel;
 
-public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHolder> {
+public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.ViewHolder> {
 
-    private ArrayList<AmigosModel> mListaAmigos;
+    private ArrayList<ModeloLogin> mListaUsuarios;
     Context context;
 
-    public AdaptadorAmigos(ArrayList<AmigosModel> mListaAmigos, Context context) {
-        this.mListaAmigos = mListaAmigos;
+    public AdaptadorUsuarios( ArrayList<ModeloLogin> mListaUsuarios, Context context) {
+        this.mListaUsuarios = mListaUsuarios;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_amigos,viewGroup,false);
+       View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_usuarios,viewGroup,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -37,28 +38,29 @@ public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.mNombreAmigo.setText(mListaAmigos.get(i).getNombreAmigo());
-        //Glide.with(context).load(mListaAmigos.get(i).getUrlFotoAmigo()).into(viewHolder.mFotoAmigo);
+        viewHolder.mNombreUsuario.setText(mListaUsuarios.get(i).getNombre());
+        //Glide.with(context).load(mListaUsuarios.get(i).getUrlFotoAmigo()).into(viewHolder.mFotoUsuario);
 
     }
 
     @Override
     public int getItemCount() {
-       return mListaAmigos.size();
-
-
+        if (mListaUsuarios.size() != 0) {
+            return mListaUsuarios.size();
+        } else {
+            return 0;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+        private ImageView mFotoUsuario;
+        private TextView mNombreUsuario;
 
-        private ImageView mFotoAmigo;
-        private TextView mNombreAmigo;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mFotoAmigo = itemView.findViewById(R.id.civ_fotoAmigo);
-            mNombreAmigo = itemView.findViewById(R.id.txt_nombreAmigo);
-
+            mFotoUsuario = itemView.findViewById(R.id.civ_fotoUsuario);
+            mNombreUsuario = itemView.findViewById(R.id.txt_nombreUsuario);
         }
     }
 }

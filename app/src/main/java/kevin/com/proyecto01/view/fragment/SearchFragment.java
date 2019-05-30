@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -26,6 +27,8 @@ import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.adaptadores.Adaptador;
 import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
 import kevin.com.proyecto01.adaptadores.AdaptadorAmigos;
+import kevin.com.proyecto01.adaptadores.AdaptadorUsuarios;
+import kevin.com.proyecto01.login.ModeloLogin;
 import kevin.com.proyecto01.modelos.AmigosModel;
 
 /**
@@ -34,11 +37,12 @@ import kevin.com.proyecto01.modelos.AmigosModel;
  */
 public class SearchFragment extends Fragment {
 
+    private static final String TAG = "SearchFragment";
     RecyclerView mRecyclerUsuarios;
-    AdaptadorAmigos mAdaptadorUsuarios;
-    ArrayList<AmigosModel> mListaUsuarios;
+    AdaptadorUsuarios mAdaptadorUsuarios;
+    ArrayList<ModeloLogin> mListaUsuarios;
     FirebaseAuth firebaseAuth;
-    AmigosModel usuarios;
+    ModeloLogin usuarios;
 
 
     public SearchFragment() {
@@ -52,6 +56,8 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment3, container, false);
        mRecyclerUsuarios = view.findViewById(R.id.recyUsuarios);
         // Cargar la lista de Usuarios
+
+        mListaUsuarios = new ArrayList<>();
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
@@ -60,10 +66,13 @@ public class SearchFragment extends Fragment {
                 mListaUsuarios.clear();
 
                 for (DataSnapshot datauser : dataSnapshot.getChildren()){
-                    usuarios = datauser.getValue(AmigosModel.class);
+                    usuarios = datauser.getValue(ModeloLogin.class);
+
+                    Log.e(TAG, usuarios.getNombre());
+
                     assert usuarios != null;
                     assert firebaseUser != null;
-                    if (!usuarios.getNombreAmigo().equals(firebaseUser.getDisplayName())){
+                    if (!usuarios.getNombre().equals(firebaseUser.getDisplayName())){
                         cargarListaUsuarios(usuarios);
                     }
                 }
@@ -78,19 +87,19 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    public void cargarListaUsuarios(AmigosModel usuarios){
-        mListaUsuarios.add(new AmigosModel(usuarios.getUrlFotoAmigo(),usuarios.getNombreAmigo()));
+    public void cargarListaUsuarios(ModeloLogin usuarios){
+        mListaUsuarios.add(new ModeloLogin(usuarios.getNombre(),usuarios.getApellido(),usuarios.getCorreo()));
+        mAdaptadorUsuarios.notifyDataSetChanged();
     }
 
     public void iniciarRecycler(){
         mRecyclerUsuarios.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerUsuarios.setHasFixedSize(true);
-        //mAdaptadorUsuarios.onCreateViewHolder(viewGroup,0);
-        mAdaptadorUsuarios = new AdaptadorAmigos(mListaUsuarios,getContext());
+        mAdaptadorUsuarios = new AdaptadorUsuarios(mListaUsuarios,getContext());
         mRecyclerUsuarios.setAdapter(mAdaptadorUsuarios);
     }
 
 
-
-
 }
+
+
