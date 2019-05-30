@@ -3,12 +3,7 @@ package kevin.com.proyecto01.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +16,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,8 +28,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.adaptadores.AdaptadorChats;
 import kevin.com.proyecto01.modelos.ChatsModel;
-import kevin.com.proyecto01.view.fragment.SubFragments.Chats_SubFragment;
-import kevin.com.proyecto01.view.fragment.SubFragments.Groups_SubFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,15 +35,17 @@ import kevin.com.proyecto01.view.fragment.SubFragments.Groups_SubFragment;
 public class ChatFragment extends Fragment {
 
     Toolbar mToolbar;
+    RecyclerView mRecyclerView;
+    AdaptadorChats mAdaptadorChats;
+    ArrayList<ChatsModel> mListaChats;
+    String TAG = "ChatFragment";
+    private static String me = "";
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
 
     private CircleImageView fotoPerfil;
     private TextView usuario;
-
-    private TabLayout tabOp;
-    private ViewPager viewPg;
 
 
     public ChatFragment() {
@@ -59,6 +59,8 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment4, container, false);
 
         gui(view);
+        mListaChats = new ArrayList<>();
+        //------------------------- DATOS DE USUARIO LOGEADO
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -67,31 +69,64 @@ public class ChatFragment extends Fragment {
 
                 if (user != null) {
                     setUserData(user);
+                    me = user.getUid();
                 }
 
             }
         };
+        //------------------------- CARGAR USUARIOS
+
+        final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+
+        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mListaChats.clear();
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    ChatsModel user = data.getValue(ChatsModel.class);
+
+                    assert user != null;
+                    assert firebaseUser != null;
+                    if (user.getId().equals(me) && user.getId() != null) {
+                    } else {
+                        if (!user.getNombre().equals(firebaseUser.getDisplayName())) {
+                            cargarListaChats(user);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        //------------LEER MENSAJE---------------------
+
+
         showToolbar("");
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
-        viewPagerAdapter.addFragment(new Chats_SubFragment(), "Chats");
-        viewPagerAdapter.addFragment(new Groups_SubFragment(), "Grupos");
-        viewPg.setAdapter(viewPagerAdapter);
-        tabOp.setupWithViewPager(viewPg);
 
-
+        initRecycler();
         return view;
 
     }
 
+    public void cargarListaChats(ChatsModel user) {
+        mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getId(), user.getNombre(), user.getMensaje(), "28/03/2018"));
+        mAdaptadorChats.notifyDataSetChanged();
+
+    }
 
 
     public void gui(View view) {
         fotoPerfil = view.findViewById(R.id.fperfil);
         usuario = view.findViewById(R.id.username);
         mToolbar = view.findViewById(R.id.toolbar_chat);
-        tabOp = view.findViewById(R.id.tab_layout);
-        viewPg = view.findViewById(R.id.view_pager);
+        mRecyclerView = view.findViewById(R.id.recycler_chats);
     }
 
 
@@ -109,6 +144,14 @@ public class ChatFragment extends Fragment {
         Glide.with(this).load(user.getPhotoUrl()).into(fotoPerfil);
     }
 
+    public void initRecycler() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+        mAdaptadorChats = new AdaptadorChats(mListaChats, getContext());
+        mRecyclerView.setAdapter(mAdaptadorChats);
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -124,36 +167,4 @@ public class ChatFragment extends Fragment {
     }
 
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titulo;
-
-        public ViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-            this.fragments = new ArrayList<>();
-            this.titulo = new ArrayList<>();
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            return fragments.get(i);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        public void addFragment(Fragment fragment, String tit) {
-            fragments.add(fragment);
-            titulo.add(tit);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titulo.get(position);
-        }
-    }
 }

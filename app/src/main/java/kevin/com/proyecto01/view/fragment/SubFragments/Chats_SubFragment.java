@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.adaptadores.AdaptadorChats;
+import kevin.com.proyecto01.login.ModeloLogin;
 import kevin.com.proyecto01.modelos.ChatsModel;
 
 /**
@@ -33,6 +36,7 @@ public class Chats_SubFragment extends Fragment {
     RecyclerView mRecyclerView;
     AdaptadorChats mAdaptadorChats;
     ArrayList<ChatsModel> mListaChats;
+    String TAG = "ChatFragment";
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
@@ -49,26 +53,24 @@ public class Chats_SubFragment extends Fragment {
         gui(view);
 
         mListaChats = new ArrayList<>();
+
         //cargarListaChats();
 
+
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("noobspace-50f69");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mListaChats.clear();
+                ModeloLogin login = dataSnapshot.getValue(ModeloLogin.class);
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ChatsModel user = snapshot.getValue(ChatsModel.class);
+                if(dataSnapshot.exists()) {
+                    for(DataSnapshot data: dataSnapshot.getChildren()){
+                        ChatsModel user = data.getValue(ChatsModel.class);
+                        cargarListaChats(user);
 
-                    assert user != null;
-                    assert firebaseUser != null;
-                    if (!user.getNombre().equals(firebaseUser.getDisplayName())) {
-                        cargarListaChats(firebaseUser);
                     }
-
                 }
             }
 
@@ -77,26 +79,45 @@ public class Chats_SubFragment extends Fragment {
 
             }
         });
+/*
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mListaChats.clear();
 
-        firebaseAuth = FirebaseAuth.getInstance();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ChatsModel chat =  snapshot.getValue(ChatsModel.class);
+
+                    cargarListaChats(chat);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
+
+        /*firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    //cargarListaChats();
+                    cargarListaChats(user);
                 }
             }
-        };
+        };*/
+
 
         initRecycler();
-
         return view;
     }
 
-    public void cargarListaChats(FirebaseUser user) {
-        mListaChats.add(new ChatsModel(" ", user.getDisplayName(), user.getPhoneNumber(), "28/03/2018", 2));
-        //mListaChats.add(new ChatsModel(" ", "Carlos", "Hola", "28/03/2018", 2));
+    public void cargarListaChats(ChatsModel user) {
+        mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getNombre(), user.getMensaje(), "28/03/2018", 2));
+        mAdaptadorChats.notifyDataSetChanged();
+
     }
 
     public void gui(View view) {
@@ -110,9 +131,7 @@ public class Chats_SubFragment extends Fragment {
         mRecyclerView.setAdapter(mAdaptadorChats);
 
     }
-
-
-    @Override
+   /* @Override
     public void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(firebaseAuthListener);
@@ -125,6 +144,7 @@ public class Chats_SubFragment extends Fragment {
             firebaseAuth.removeAuthStateListener(firebaseAuthListener);
         }
     }
+*/
 
 
 }
