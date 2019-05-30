@@ -4,6 +4,8 @@ public class ModeloLogin {
     private String nombre;
     private String apellido;
     private String correo;
+    private String urlImage;
+    private String idUser;
     private String contracena;
     private String confirmacion;
 
@@ -11,10 +13,12 @@ public class ModeloLogin {
     }
 
 
-    public ModeloLogin(String nombre, String apellido, String correo) {
+    public ModeloLogin(String nombre, String apellido, String correo, String urlImage, String idUser) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
+        this.urlImage = urlImage;
+        this.idUser = idUser;
     }
 
     public String getNombre() {
@@ -66,5 +70,21 @@ public class ModeloLogin {
                 ", contracena='" + contracena + '\'' +
                 ", confirmacion='" + confirmacion + '\'' +
                 '}';
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 }

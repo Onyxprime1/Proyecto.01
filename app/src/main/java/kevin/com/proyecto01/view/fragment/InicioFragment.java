@@ -119,10 +119,14 @@ public class InicioFragment extends Fragment {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+                Log.e(TAG, "CHILDcHANGE");
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+
+                Log.e(TAG, "Entro a removido");
 
                 if(dataSnapshot.exists()){
                     PostEntity postElimiado = dataSnapshot.getValue(PostEntity.class);
@@ -133,12 +137,12 @@ public class InicioFragment extends Fragment {
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Log.e(TAG, "CHILDmOVED");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.e(TAG, "CHILDcANCELLED");
             }
         });
 

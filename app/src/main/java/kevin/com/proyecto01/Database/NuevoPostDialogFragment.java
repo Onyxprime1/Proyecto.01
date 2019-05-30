@@ -152,7 +152,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
         final DatabaseReference reference = Util.getmDatabase().getReference();
 
-        listaPosts.add(postEntity);
+        listaPosts.add(0, postEntity);
 
 
         reference.child("Posts").child(id_user).setValue(id_user);

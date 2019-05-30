@@ -55,6 +55,9 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment3, container, false);
        mRecyclerUsuarios = view.findViewById(R.id.recyUsuarios);
+
+       mListaUsuarios = new ArrayList<>();
+
         // Cargar la lista de Usuarios
 
         mListaUsuarios = new ArrayList<>();

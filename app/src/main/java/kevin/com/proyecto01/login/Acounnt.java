@@ -87,7 +87,11 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
 
             if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                 if (password.equals(confPassword)) {
-                    ModeloLogin modelo = new ModeloLogin(editTextUser.getText().toString(), editTextApellido.getText().toString(), editTextEmail.getText().toString());
+
+
+                    String id = mAuth.getUid();
+                    String urlImage = mAuth.getCurrentUser().getPhotoUrl().toString();
+                    ModeloLogin modelo = new ModeloLogin(user, apellido, email, urlImage, id);
                     creatAccount(modelo, password);
                 }else{
                     Toast.makeText(this, "Las contraseñas no coinciden, inténtelo de nuevo", Toast.LENGTH_SHORT).show();
