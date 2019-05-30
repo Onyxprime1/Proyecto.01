@@ -10,17 +10,15 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarProfile"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="290dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@color/colorPrimary">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <ImageView
                 android:id="@+id/fondo"
@@ -30,25 +28,25 @@
                 android:background="@drawable/aaab"
                 app:layout_collapseMode="parallax"
                 android:transitionName="@string/tramsiton"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="150dp"
-                android:paddingBottom="20dp"
+                android:layout_height="240dp"
                 android:layout_gravity="center|top"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center"
-                android:background="@color/textColor">
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/textColor"
+                android:gravity="center|bottom"
+                android:orientation="vertical"
+                android:paddingBottom="3dp">
 
                 <TextView
-                    android:id="@+id/userFragmen2"
+                    android:id="@+id/username_perfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_card"
                     android:textColor="@color/texto"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
@@ -67,8 +65,6 @@
                     android:layout_gravity="bottom"
                     app:tabMode="scrollable"/>
 
-
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -79,14 +75,19 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/foto"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:src="@drawable/aaab"
+    <RelativeLayout
+        android:id="@+id/linearFoto"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_gravity="center|top"
-        android:layout_marginTop="30dp"
-        android:elevation="10dp"
+        android:layout_marginTop="25dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/foto_perfil"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/aaab"
+        android:elevation="5dp"
+        android:layout_gravity="center"
         app:layout_behavior="com.zoonref.SimpleViewBehavior"
         app:dependsOn="@+id/appbarProfile"
         app:dependType="y"
@@ -95,6 +96,21 @@
         app:targetY="-5dp"
         app:targetWidth="32dp"
         app:targetHeight="32dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_subirFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/textColor"
+            app:fabSize="mini"
+            app:layout_anchor="@id/foto_perfil"
+            app:srcCompat="@drawable/ic_camera_alt_24dp"/>
+    </RelativeLayout>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

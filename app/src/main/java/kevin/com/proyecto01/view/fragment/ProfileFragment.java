@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -37,6 +38,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -51,8 +54,9 @@ import kevin.com.proyecto01.tabsPerfil.Repositorios;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+public class ProfileFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
+    public static final int GALLERY_INTENT = 1;
     private SharedPreferences preferences;
     private GoogleApiClient googleApiClient;
     private FirebaseAuth firebaseAuth;
@@ -63,14 +67,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     private TabsAdapter mTabsAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private FloatingActionButton mSubirFotoPerfil;
+    private StorageReference mStorage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
+
         preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-
-
+        mStorage = FirebaseStorage.getInstance().getReference();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -92,9 +98,10 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
                 }
             }
         };
-        circle = view.findViewById(R.id.foto);
+        circle = view.findViewById(R.id.foto_perfil);
         img = view.findViewById(R.id.fondo);
-        texto = view.findViewById(R.id.userFragmen2);
+        texto = view.findViewById(R.id.username_perfil);
+        mSubirFotoPerfil = view.findViewById(R.id.fab_subirFoto);
         setHasOptionsMenu(true);
         showToolbar("", view);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -217,5 +224,14 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         mTabsAdapter = new TabsAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent abrirGaleria = new Intent(Intent.ACTION_PICK);
+        abrirGaleria.setType("image/*");
+        //startActivity(abrirGaleria,GALLERY_INTENT);
+
+
     }
 }
