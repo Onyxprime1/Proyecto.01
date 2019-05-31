@@ -29,13 +29,12 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
-//import kevin.com.proyecto01.adaptadores.AdaptadorMessage;
-//import kevin.com.proyecto01.modelos.ChatsModel;
-//import kevin.com.proyecto01.modelos.MessageModel;
+import kevin.com.proyecto01.adaptadores.AdaptadorMessage;
+import kevin.com.proyecto01.modelos.ChatsModel;
+import kevin.com.proyecto01.modelos.MessageModel;
 
 public class Chat extends AppCompatActivity {
 
-/*
     private Toolbar mToolbarChat;
     private CircleImageView perfil;
     private TextView nombre;
@@ -79,7 +78,6 @@ public class Chat extends AppCompatActivity {
                     if (user.getNombre().equals(username)) {
                         nombre.setText(user.getNombre());
                     }
-
                     readMessage(fuser.getUid(), id, user.getImagenPerfil());
                 }
             }
@@ -96,7 +94,6 @@ public class Chat extends AppCompatActivity {
                 if (!mensaje.getText().toString().equals("")) {
                     sendMenssage(fuser.getUid(), id , mensaje.getText().toString(), currentTime.toString());
                 }
-
                 mensaje.setText("");
             }
         });
@@ -193,5 +190,4 @@ public class Chat extends AppCompatActivity {
         }
         return true;
     }
-*/
 }
