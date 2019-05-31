@@ -94,7 +94,6 @@ public class Chat extends AppCompatActivity {
                 if (!mensaje.getText().toString().equals("")) {
                     sendMenssage(fuser.getUid(), id , mensaje.getText().toString(), currentTime.toString());
                 }
-
                 mensaje.setText("");
             }
         });
