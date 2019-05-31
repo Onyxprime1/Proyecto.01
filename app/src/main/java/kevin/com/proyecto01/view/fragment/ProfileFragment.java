@@ -272,7 +272,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
 
     }
 
-   /* @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -287,5 +287,5 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
                 }
             });
         }
-    }*/
+    }
 }
