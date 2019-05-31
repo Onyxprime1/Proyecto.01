@@ -1,7 +1,6 @@
 package kevin.com.proyecto01.login;
 
 public class ModeloLogin {
-    private String imagenPerfil;
     private String nombre;
     private String apellido;
     private String correo;
@@ -13,12 +12,9 @@ public class ModeloLogin {
 
 
     public ModeloLogin(String nombre, String apellido, String correo) {
-
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
-        this.contracena = contracena;
-        this.confirmacion = confirmacion;
     }
 
     public String getNombre() {
