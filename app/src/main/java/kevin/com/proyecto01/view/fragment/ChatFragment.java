@@ -35,7 +35,7 @@ import kevin.com.proyecto01.modelos.ChatsModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment4 extends Fragment {
+public class ChatFragment extends Fragment {
 
     Toolbar mToolbar;
     RecyclerView mRecyclerView;
@@ -50,7 +50,7 @@ public class Fragment4 extends Fragment {
     private TextView usuario;
 
 
-    public Fragment4() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 
