@@ -24,32 +24,32 @@
             app:popupTheme="@style/AppTheme.AppBarOverlay">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/perfil"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/size"
+                android:layout_height="@dimen/size"
                 android:layout_marginEnd="10dp"
                 android:elevation="5dp"
+                android:id="@+id/perfil"
                 android:background="@drawable/logo" />
 
             <TextView
-                android:id="@+id/nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
+                android:id="@+id/nombre"
                 android:textColor="@color/texto" />
 
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-   <android.support.v7.widget.RecyclerView
-       android:id="@+id/recy_chat"
-       android:layout_width="fill_parent"
-       android:layout_height="fill_parent"
-       android:layout_gravity="center_vertical"
-       android:layout_below="@+id/bar_layout"
-       android:layout_above="@+id/linear"
-       android:scrollbars="vertical"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recy_chat"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/bar_layout"
+        android:layout_above="@+id/linear"
+        android:scrollbars="vertical"/>
 
     <LinearLayout
         android:id="@+id/linear"
@@ -62,26 +62,26 @@
         android:layout_marginBottom="5dp"
         android:layout_alignParentBottom="true">
 
-        <EditText
-            android:id="@+id/edt_message"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="10"
-            android:hint="@string/mensaje"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="20dp" />
+       <EditText
+           android:id="@+id/edt_message"
+           android:layout_width="0dp"
+           android:layout_height="@dimen/size"
+           android:layout_gravity="center"
+           android:layout_marginStart="5dp"
+           android:layout_marginEnd="10dp"
+           android:layout_weight="10"
+           android:hint="@string/mensaje"
+           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+           android:textColor="@color/black"
+           android:textColorHint="@color/black"
+           android:textSize="20dp"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_enviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_send_black_24dp"
             android:backgroundTint="@color/colorAccent"
+            app:srcCompat="@drawable/ic_send_black_24dp"
             android:elevation="5dp"/>
 
     </LinearLayout>

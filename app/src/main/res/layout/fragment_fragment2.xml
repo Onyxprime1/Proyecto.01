@@ -7,10 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.ProfileFragment">
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarProfile"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:background="@color/colorPrimary">
@@ -18,7 +19,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="270dp"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -32,23 +33,22 @@
                 android:transitionName="@string/tramsiton"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="150dp"
-                android:paddingBottom="20dp"
                 android:layout_gravity="center|top"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:gravity="center"
+                android:gravity="center|bottom"
                 android:background="@color/textColor">
 
                 <TextView
                     android:id="@+id/userFragmen2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/user_card"
-                    android:textColor="@color/texto"
-                    android:textSize="30sp"/>
+                    android:textColor="@color/black"
+                    android:textSize="24sp"/>
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
@@ -60,33 +60,29 @@
                 app:layout_collapseMode="pin">
             </android.support.v7.widget.Toolbar>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tablayout_perfil"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    app:tabMode="scrollable"/>
-
-
-
         </android.support.design.widget.CollapsingToolbarLayout>
-
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:tabMode="scrollable"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager_tabs"
+        android:id="@+id/viewPager_perfil"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/foto"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:src="@drawable/aaab"
         android:layout_gravity="center|top"
-        android:layout_marginTop="30dp"
-        android:elevation="10dp"
+        android:layout_marginTop="40dp"
+        android:elevation="4dp"
         app:layout_behavior="com.zoonref.SimpleViewBehavior"
         app:dependsOn="@+id/appbarProfile"
         app:dependType="y"
@@ -96,5 +92,15 @@
         app:targetWidth="32dp"
         app:targetHeight="32dp"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_subir_foto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        app:backgroundTint="@color/textColor"
+        app:elevation="6dp"
+        app:fabSize="mini"
+        app:layout_anchor="@+id/foto"
+        app:layout_anchorGravity="end|center" />
 
 </android.support.design.widget.CoordinatorLayout>

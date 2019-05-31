@@ -8,16 +8,16 @@
         android:id="@+id/fotoPerfil"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/logo" />
+        android:background="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/show_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
-        android:layout_toRightOf="@+id/fotoPerfil"
-        android:background="@drawable/design_message_left"
-        android:padding="7dp"
-        android:text="holis"
-        android:textSize="17sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/show_message"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="7dp"-->
+        <!--android:layout_toRightOf="@+id/fotoPerfil"-->
+        <!--&lt;!&ndash;android:background="@drawable/design_message_left"&ndash;&gt;-->
+        <!--android:padding="7dp"-->
+        <!--android:text="holis"-->
+        <!--android:textSize="17sp" />-->
 </RelativeLayout>

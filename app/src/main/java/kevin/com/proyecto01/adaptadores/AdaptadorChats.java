@@ -19,12 +19,11 @@ import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.modelos.ChatsModel;
 import kevin.com.proyecto01.view.fragment.Chat;
 
-public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHolder> {
+public class  AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHolder> {
 
     private ArrayList<ChatsModel> mListaChats;
     Context context;
     int position = 0;
-    private String id;
 
     public AdaptadorChats() {
     }
@@ -45,7 +44,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Glide.with(context).load(mListaChats.get(i).getImagenPerfil()).into(viewHolder.mImgPerfil);
-        id = mListaChats.get(i).getId();
+        //viewHolder.mId.setText(mListaChats.get(i).getId());
         viewHolder.mNombre.setText(mListaChats.get(i).getNombre());
         viewHolder.mMensaje.setText(mListaChats.get(i).getMensaje());
         viewHolder.mFecha.setText(mListaChats.get(i).getFecha());
@@ -55,7 +54,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Chat.class);
-                intent.putExtra("id", id);
+                intent.putExtra("id", viewHolder.mId.getText().toString());
                 intent.putExtra("username", viewHolder.mNombre.getText().toString());
                 context.startActivity(intent);
             }
@@ -73,7 +72,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
         private TextView mNombre;
         private TextView mMensaje;
         private TextView mFecha;
-        private TextView mNumero;
+        private TextView mId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,6 +81,7 @@ public class AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHold
             mNombre = itemView.findViewById(R.id.txt_username);
             mMensaje = itemView.findViewById(R.id.txt_mensaje);
             mFecha = itemView.findViewById(R.id.txt_fecha);
+            mId = itemView.findViewById(R.id.id);
 
         }
     }
