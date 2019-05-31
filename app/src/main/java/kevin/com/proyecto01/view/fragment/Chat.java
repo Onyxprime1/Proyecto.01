@@ -78,7 +78,6 @@ public class Chat extends AppCompatActivity {
                     if (user.getNombre().equals(username)) {
                         nombre.setText(user.getNombre());
                     }
-
                     readMessage(fuser.getUid(), id, user.getImagenPerfil());
                 }
             }
@@ -95,7 +94,6 @@ public class Chat extends AppCompatActivity {
                 if (!mensaje.getText().toString().equals("")) {
                     sendMenssage(fuser.getUid(), id , mensaje.getText().toString(), currentTime.toString());
                 }
-
                 mensaje.setText("");
             }
         });
@@ -193,4 +191,3 @@ public class Chat extends AppCompatActivity {
         return true;
     }
 }
-
