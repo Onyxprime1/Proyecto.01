@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -80,6 +81,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private StorageReference storageReference;
+    private FloatingActionButton mButtonSubirFoto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -118,6 +120,8 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         mNombrePerfil = view.findViewById(R.id.userFragmen2);
         mTabLayout = view.findViewById(R.id.tablayout_perfil);
         mViewPager = view.findViewById(R.id.viewPager_perfil);
+        mButtonSubirFoto = view.findViewById(R.id.fab_subir_foto);
+        mButtonSubirFoto.setOnClickListener(this);
         insertNestedFragment();
         initComponentes();
         obtenerDatosUsuario();
@@ -268,7 +272,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
 
     }
 
-    @Override
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -283,5 +287,5 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
                 }
             });
         }
-    }
+    }*/
 }
