@@ -43,7 +43,7 @@ import kevin.com.proyecto01.login.MainActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment2 extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+public class ProfileFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private SharedPreferences preferences;
 

@@ -23,25 +23,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.adaptadores.AdaptadorChats;
-import kevin.com.proyecto01.login.ModeloLogin;
 import kevin.com.proyecto01.modelos.ChatsModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment4 extends Fragment {
+public class ChatFragment extends Fragment {
 
     Toolbar mToolbar;
     RecyclerView mRecyclerView;
     AdaptadorChats mAdaptadorChats;
     ArrayList<ChatsModel> mListaChats;
     String TAG = "ChatFragment";
+    private static String me = "";
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
@@ -50,7 +48,7 @@ public class Fragment4 extends Fragment {
     private TextView usuario;
 
 
-    public Fragment4() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 
@@ -71,6 +69,7 @@ public class Fragment4 extends Fragment {
 
                 if (user != null) {
                     setUserData(user);
+                    me = user.getUid();
                 }
 
             }
@@ -91,8 +90,11 @@ public class Fragment4 extends Fragment {
 
                     assert user != null;
                     assert firebaseUser != null;
-                    if (!user.getNombre().equals(firebaseUser.getDisplayName())) {
-                        cargarListaChats(user);
+                    if (user.getId().equals(me) && user.getId() != null) {
+                    } else {
+                        if (!user.getNombre().equals(firebaseUser.getDisplayName())) {
+                            cargarListaChats(user);
+                        }
                     }
                 }
             }
@@ -102,6 +104,7 @@ public class Fragment4 extends Fragment {
 
             }
         });
+        //------------LEER MENSAJE---------------------
 
 
         showToolbar("");
@@ -113,7 +116,7 @@ public class Fragment4 extends Fragment {
     }
 
     public void cargarListaChats(ChatsModel user) {
-        mListaChats.add(new ChatsModel(user.getImagenPerfil(),"id", user.getNombre(), user.getMensaje(), "28/03/2018"));
+        mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getId(), user.getNombre(), user.getMensaje(), "28/03/2018"));
         mAdaptadorChats.notifyDataSetChanged();
 
     }

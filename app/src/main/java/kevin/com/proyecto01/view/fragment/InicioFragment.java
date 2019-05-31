@@ -29,7 +29,7 @@ import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment1 extends Fragment {
+public class InicioFragment extends Fragment {
 
     private FloatingActionButton fab;
 
@@ -41,7 +41,7 @@ public class Fragment1 extends Fragment {
 
     private NuevoPostDialogViewModel viewModel;
 
-    public Fragment1() {
+    public InicioFragment() {
         // Required empty public constructor
     }
 

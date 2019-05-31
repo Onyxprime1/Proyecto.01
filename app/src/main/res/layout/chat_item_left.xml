@@ -8,7 +8,7 @@
         android:id="@+id/fotoPerfil"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/logo" />
+        android:background="@drawable/logo" />
 
     <TextView
         android:id="@+id/show_message"

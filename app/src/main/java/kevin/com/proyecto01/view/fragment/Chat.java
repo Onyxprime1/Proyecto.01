@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,13 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
-import kevin.com.proyecto01.adaptadores.AdaptadorChats;
 import kevin.com.proyecto01.adaptadores.AdaptadorMessage;
 import kevin.com.proyecto01.modelos.ChatsModel;
 import kevin.com.proyecto01.modelos.MessageModel;
@@ -98,6 +95,7 @@ public class Chat extends AppCompatActivity {
                 if (!mensaje.getText().toString().equals("")) {
                     sendMenssage(fuser.getUid(), id , mensaje.getText().toString(), currentTime.toString());
                 }
+
                 mensaje.setText("");
             }
         });
@@ -195,4 +193,3 @@ public class Chat extends AppCompatActivity {
         return true;
     }
 }
-
