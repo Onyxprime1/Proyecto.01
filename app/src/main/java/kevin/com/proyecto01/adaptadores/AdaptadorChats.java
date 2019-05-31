@@ -44,7 +44,7 @@ public class  AdaptadorChats extends RecyclerView.Adapter<AdaptadorChats.ViewHol
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Glide.with(context).load(mListaChats.get(i).getImagenPerfil()).into(viewHolder.mImgPerfil);
-        viewHolder.mId.setText(mListaChats.get(i).getId());
+        //viewHolder.mId.setText(mListaChats.get(i).getId());
         viewHolder.mNombre.setText(mListaChats.get(i).getNombre());
         viewHolder.mMensaje.setText(mListaChats.get(i).getMensaje());
         viewHolder.mFecha.setText(mListaChats.get(i).getFecha());

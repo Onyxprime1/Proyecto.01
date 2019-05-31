@@ -90,12 +90,12 @@ public class ChatFragment extends Fragment {
 
                     assert user != null;
                     assert firebaseUser != null;
-                    if (user.getId().equals(me) && user.getId() != null) {
+                   /* if (user.getId().equals(me) && user.getId() != null) {
                     } else {
                         if (!user.getNombre().equals(firebaseUser.getDisplayName())) {
                             cargarListaChats(user);
                         }
-                    }
+                    }*/
                 }
             }
 
@@ -116,7 +116,7 @@ public class ChatFragment extends Fragment {
     }
 
     public void cargarListaChats(ChatsModel user) {
-        mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getId(), user.getNombre(), user.getMensaje(), "28/03/2018"));
+       // mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getId(), user.getNombre(), user.getMensaje(), "28/03/2018"));
         mAdaptadorChats.notifyDataSetChanged();
 
     }

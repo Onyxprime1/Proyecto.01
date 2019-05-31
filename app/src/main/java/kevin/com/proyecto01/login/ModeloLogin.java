@@ -60,7 +60,7 @@ public class ModeloLogin {
     public void setConfirmacion(String confirmacion) {
         this.confirmacion = confirmacion;
     }
-
+/*
     @Override
     public String toString() {
         return "ModeloLogin{" +
@@ -70,7 +70,7 @@ public class ModeloLogin {
                 ", contracena='" + contracena + '\'' +
                 ", confirmacion='" + confirmacion + '\'' +
                 '}';
-    }
+    }*/
 
     public String getUrlImage() {
         return urlImage;
