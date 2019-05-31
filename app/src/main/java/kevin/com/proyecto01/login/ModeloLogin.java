@@ -13,12 +13,11 @@ public class ModeloLogin {
     }
 
 
-    public ModeloLogin(String nombre, String apellido, String correo, String urlImage, String idUser) {
+    public ModeloLogin(String nombre, String apellido, String correo, String urlImage) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.urlImage = urlImage;
-        this.idUser = idUser;
     }
 
     public String getNombre() {

@@ -61,6 +61,7 @@
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout_perfil"
             android:layout_width="match_parent"
@@ -92,15 +93,6 @@
         app:targetWidth="32dp"
         app:targetHeight="32dp"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_subir_foto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isScrollContainer="false"
-        app:backgroundTint="@color/textColor"
-        app:elevation="6dp"
-        app:fabSize="mini"
-        app:layout_anchor="@+id/foto"
-        app:layout_anchorGravity="end|center" />
+
 
 </android.support.design.widget.CoordinatorLayout>
