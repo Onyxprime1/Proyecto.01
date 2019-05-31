@@ -29,7 +29,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:elevation="5dp"
-                android:src="@drawable/aaab" />
+                android:background="@drawable/logo" />
 
             <TextView
                 android:id="@+id/username"
@@ -41,23 +41,14 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:tabIndicatorColor="@color/texto"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextColor="@color/texto" />
-
     </android.support.design.widget.AppBarLayout>
 
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_chats"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
 
 </LinearLayout>

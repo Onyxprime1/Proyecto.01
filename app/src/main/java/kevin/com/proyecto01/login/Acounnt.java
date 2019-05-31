@@ -87,8 +87,10 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
 
             if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                 if (password.equals(confPassword)) {
-                    ModeloLogin modelo = new ModeloLogin(editTextUser.getText().toString(), editTextApellido.getText().toString(), editTextEmail.getText().toString());
-                    creatAccount(modelo, password);
+
+
+
+                    creatAccount(email, password, user, apellido );
                 }else{
                     Toast.makeText(this, "Las contraseñas no coinciden, inténtelo de nuevo", Toast.LENGTH_SHORT).show();
                 }
@@ -102,16 +104,18 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public void creatAccount(final ModeloLogin newUser, String pass) {
-        mAuth.createUserWithEmailAndPassword(newUser.getCorreo(), pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    public void creatAccount(final String email, String pass, final String user, final String apellido) {
+        mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     saveDisplayName();
-
-                    writeNewUser(newUser);
-
                     sendEmailVericatio();
+
+                    ModeloLogin modelo = new ModeloLogin(user, apellido, email, "", "");
+
+                    writeNewUser(modelo);
+
                     startActivity(new Intent(Acounnt.this, MainActivity.class));
                     Toast.makeText(Acounnt.this, "Usario creado", Toast.LENGTH_SHORT).show();
                 } else {

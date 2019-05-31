@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import kevin.com.proyecto01.view.fragment.InicioFragment;
-import kevin.com.proyecto01.view.fragment.ProfileFragment;
 import kevin.com.proyecto01.view.fragment.SearchFragment;
+import kevin.com.proyecto01.view.fragment.ProfileFragment;
 import kevin.com.proyecto01.view.fragment.ChatFragment;
 
 public class ActivityDashboard extends AppCompatActivity {

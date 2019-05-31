@@ -43,8 +43,6 @@ public class Recibir extends AppCompatActivity {
         texto1.setText(uno);
         texto2.setText(dos);
         texto3.setText(tres);
-
-
     }
 
     public void showToolbar(String tittle, boolean upButton) {

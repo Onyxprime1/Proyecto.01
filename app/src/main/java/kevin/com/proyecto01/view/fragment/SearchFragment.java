@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.adaptadores.Adaptador;
 import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
 import kevin.com.proyecto01.adaptadores.AdaptadorAmigos;
@@ -56,11 +57,14 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment3, container, false);
        mRecyclerUsuarios = view.findViewById(R.id.recyUsuarios);
+
+       mListaUsuarios = new ArrayList<>();
+
         // Cargar la lista de Usuarios
 
         mListaUsuarios = new ArrayList<>();
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reference = Util.getmDatabase().getReference();
         reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,7 +93,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void cargarListaUsuarios(ModeloLogin usuarios){
-        mListaUsuarios.add(new ModeloLogin(usuarios.getNombre(),usuarios.getApellido(),usuarios.getCorreo()));
+        mListaUsuarios.add(new ModeloLogin(usuarios.getNombre(),usuarios.getApellido(),usuarios.getCorreo(), usuarios.getUrlImage(), ""));
         mAdaptadorUsuarios.notifyDataSetChanged();
     }
 
