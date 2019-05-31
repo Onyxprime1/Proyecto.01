@@ -78,7 +78,6 @@ public class Chat extends AppCompatActivity {
                     if (user.getNombre().equals(username)) {
                         nombre.setText(user.getNombre());
                     }
-
                     readMessage(fuser.getUid(), id, user.getImagenPerfil());
                 }
             }
