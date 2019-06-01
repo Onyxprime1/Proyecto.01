@@ -121,6 +121,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         mTabLayout = view.findViewById(R.id.tablayout_perfil);
         mViewPager = view.findViewById(R.id.viewPager_perfil);
         mButtonSubirFoto = view.findViewById(R.id.fab_subir_foto);
+        setHasOptionsMenu(true);
         mButtonSubirFoto.setOnClickListener(this);
         insertNestedFragment();
         initComponentes();
