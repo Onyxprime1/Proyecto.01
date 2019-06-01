@@ -293,6 +293,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                     Toast.makeText(getContext(), "Se subio la foto exitosamente", Toast.LENGTH_SHORT).show();
                 }
             });
