@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="@string/user_card"
-                    android:textColor="@color/black"
+                    android:textColor="@color/texto"
                     android:textSize="24sp"/>
             </LinearLayout>
 
@@ -55,12 +55,13 @@
                 android:id="@+id/toolbar3"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:contextClickable="true"
                 android:minHeight="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_collapseMode="pin">
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout_perfil"
             android:layout_width="match_parent"
@@ -74,7 +75,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
+    <ImageButton
+        android:id="@+id/btn_cerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_exit_to_app_white_24dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="10dp"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/foto"
         android:layout_width="180dp"
@@ -97,6 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isScrollContainer="false"
+        app:srcCompat="@drawable/ic_camera_alt_24dp"
         app:backgroundTint="@color/textColor"
         app:elevation="6dp"
         app:fabSize="mini"
