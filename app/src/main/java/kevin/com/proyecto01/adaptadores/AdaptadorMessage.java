@@ -72,6 +72,7 @@ public class AdaptadorMessage extends RecyclerView.Adapter<AdaptadorMessage.View
         private ImageView mImgPerfil;
         private TextView show_msg;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
