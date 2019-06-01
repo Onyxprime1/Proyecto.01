@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.adaptadores.AdaptadorChats;
 import kevin.com.proyecto01.modelos.ChatsModel;
 
@@ -77,25 +78,26 @@ public class ChatFragment extends Fragment {
         //------------------------- CARGAR USUARIOS
 
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
+        DatabaseReference reference = Util.getmDatabase().getReference();
 
         reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mListaChats.clear();
-
+                String id = "";
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     ChatsModel user = data.getValue(ChatsModel.class);
 
                     assert user != null;
                     assert firebaseUser != null;
-                   /* if (user.getId().equals(me) && user.getId() != null) {
+                    if (data.getKey().equals(me) && data.getKey() != null) {
+                        id = data.getKey();
                     } else {
-                        if (!user.getNombre().equals(firebaseUser.getDisplayName())) {
-                            cargarListaChats(user);
+                        if (!data.getKey().equals(firebaseUser.getUid())) {
+                            cargarListaChats(user,data);
                         }
-                    }*/
+                    }
                 }
             }
 
@@ -115,8 +117,8 @@ public class ChatFragment extends Fragment {
 
     }
 
-    public void cargarListaChats(ChatsModel user) {
-       // mListaChats.add(new ChatsModel(user.getImagenPerfil(), user.getId(), user.getNombre(), user.getMensaje(), "28/03/2018"));
+    public void cargarListaChats(ChatsModel user, DataSnapshot id) {
+        mListaChats.add(new ChatsModel(user.getImagenPerfil(), id.getKey(), user.getNombre(), user.getMensaje(), "28/03/2018"));
         mAdaptadorChats.notifyDataSetChanged();
 
     }

@@ -20,16 +20,8 @@ public class MessageModel {
         return receptor;
     }
 
-    public void setReceptor(String receptor) {
-        this.receptor = receptor;
-    }
-
     public String getEmisor() {
         return emisor;
-    }
-
-    public void setEmisor(String emisor) {
-        this.emisor = emisor;
     }
 
     public String getMensaje() {
