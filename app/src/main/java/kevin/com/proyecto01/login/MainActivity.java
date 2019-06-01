@@ -31,6 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
 
 import org.w3c.dom.Text;
 
@@ -254,16 +255,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     FirebaseUser user = authGoogle.getCurrentUser();
-                    Log.i(TAG, user.getUid());
-                    updateUI(user);
-                } else {
-                    updateUI(null);
+                    writeNewUser(new ModeloLogin(user.getDisplayName(),"", user.getEmail(), user.getPhotoUrl().toString()), user);
                 }
             }
         });
     }
 
-    private void updateUI(Object o) {
+    private void writeNewUser(ModeloLogin newUser, FirebaseUser user) {
+        String user_id = user.getUid();
+
+        DatabaseReference databaseReference = Util.getmDatabase().getReference();
+
+        databaseReference.child("Usuarios").child(user_id).setValue(newUser);
+
     }
 
     private void goMainScreen() {
