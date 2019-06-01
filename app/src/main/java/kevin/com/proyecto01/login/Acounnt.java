@@ -112,7 +112,7 @@ public class Acounnt extends AppCompatActivity implements View.OnClickListener {
                     saveDisplayName();
                     sendEmailVericatio();
 
-                    ModeloLogin modelo = new ModeloLogin(user, apellido, email, "", "");
+                    ModeloLogin modelo = new ModeloLogin(user, apellido, email, "");
 
                     writeNewUser(modelo);
 

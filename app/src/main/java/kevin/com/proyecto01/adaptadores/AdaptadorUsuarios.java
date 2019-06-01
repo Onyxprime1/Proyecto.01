@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +21,7 @@ import java.util.Map;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.login.ModeloLogin;
-import kevin.com.proyecto01.modelos.AmigosModel;
+import kevin.com.proyecto01.modelos.Notificacion;
 
 public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.ViewHolder> {
 
@@ -45,7 +42,7 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
         viewHolder.mNombreUsuario.setText(mListaUsuarios.get(i).getNombre());
         //Glide.with(context).load(mListaUsuarios.get(i).getUrlFotoAmigo()).into(viewHolder.mFotoUsuario);
@@ -60,10 +57,17 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
 
                 FirebaseAuth user = FirebaseAuth.getInstance();
 
-                Map<String, String> noti = new HashMap<>();
-                noti.put("Usuario", "Notificacion");
+                String receptor = mListaUsuarios.get(i).getIdUser();
 
-                reference.child("Notificiones").child(user.getUid()).push().setValue(noti);
+                Notificacion notificacion = new Notificacion(user.getUid(), receptor, "No");
+
+
+                Map<String, String> noti = new HashMap<>();
+                noti.put("Emisor", notificacion.getEmisor());
+                noti.put("Receptor", notificacion.getReceptor());
+                noti.put("EsAmigo", notificacion.getEsAmigo());
+
+                reference.child("Notificiones").child(receptor).push().setValue(noti);
 
 
             }

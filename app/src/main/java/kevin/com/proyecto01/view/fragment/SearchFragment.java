@@ -3,6 +3,7 @@ package kevin.com.proyecto01.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +44,7 @@ public class SearchFragment extends Fragment {
     AdaptadorUsuarios mAdaptadorUsuarios;
     ArrayList<ModeloLogin> mListaUsuarios;
     FirebaseAuth firebaseAuth;
-    ModeloLogin usuarios;
+
 
 
     public SearchFragment() {
@@ -58,11 +59,12 @@ public class SearchFragment extends Fragment {
        mRecyclerUsuarios = view.findViewById(R.id.recyUsuarios);
 
        mListaUsuarios = new ArrayList<>();
+       firebaseAuth = FirebaseAuth.getInstance();
 
         // Cargar la lista de Usuarios
 
         mListaUsuarios = new ArrayList<>();
-        final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+
         DatabaseReference reference = Util.getmDatabase().getReference();
         reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,13 +72,15 @@ public class SearchFragment extends Fragment {
                 mListaUsuarios.clear();
 
                 for (DataSnapshot datauser : dataSnapshot.getChildren()){
-                    usuarios = datauser.getValue(ModeloLogin.class);
+                    ModeloLogin usuarios = datauser.getValue(ModeloLogin.class);
 
                     Log.e(TAG, usuarios.getNombre());
 
+                    usuarios.setIdUser(datauser.getKey());
+
                     assert usuarios != null;
-                    assert firebaseUser != null;
-                    if (!usuarios.getNombre().equals(firebaseUser.getDisplayName())){
+
+                    if (!usuarios.getIdUser().equals(firebaseAuth.getUid())){
                         cargarListaUsuarios(usuarios);
                     }
                 }
@@ -92,7 +96,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void cargarListaUsuarios(ModeloLogin usuarios){
-        mListaUsuarios.add(new ModeloLogin(usuarios.getNombre(),usuarios.getApellido(),usuarios.getCorreo(), usuarios.getUrlImage(), ""));
+        mListaUsuarios.add(usuarios);
         mAdaptadorUsuarios.notifyDataSetChanged();
     }
 

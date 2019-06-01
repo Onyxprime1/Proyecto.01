@@ -81,14 +81,17 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private StorageReference storageReference;
-    private FloatingActionButton mButtonSubirFoto;
+   // private FloatingActionButton mButtonSubirFoto;
+
+    private Toolbar mytoolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_fragment2, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
         storageReference = FirebaseStorage.getInstance().getReference();
         preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -114,15 +117,18 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
 
         return view;
     }
+
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         mfotoPerfil = view.findViewById(R.id.foto);
         imgFondo = view.findViewById(R.id.fondo);
         mNombrePerfil = view.findViewById(R.id.userFragmen2);
         mTabLayout = view.findViewById(R.id.tablayout_perfil);
         mViewPager = view.findViewById(R.id.viewPager_perfil);
-        mButtonSubirFoto = view.findViewById(R.id.fab_subir_foto);
-        setHasOptionsMenu(true);
-        mButtonSubirFoto.setOnClickListener(this);
+        //mButtonSubirFoto = view.findViewById(R.id.fab_subir_foto);
+        //mButtonSubirFoto.setOnClickListener(this);
+        mytoolbar = view.findViewById(R.id.toolbar3);
+
         insertNestedFragment();
         initComponentes();
         obtenerDatosUsuario();
@@ -138,27 +144,27 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
 
     public void showToolbar(String tittle, View view) {
         AppCompatActivity activi = (AppCompatActivity) getActivity();
-        Toolbar mytoolbar = view.findViewById(R.id.toolbar3);
+
         activi.setSupportActionBar(mytoolbar);
         activi.getSupportActionBar().setTitle(tittle);
-        activi.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
     }
 
-    public void obtenerDatosUsuario(){
+    public void obtenerDatosUsuario() {
         final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         reference = Util.getmDatabase().getReference();
         reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot datauser : dataSnapshot.getChildren()){
+                for (DataSnapshot datauser : dataSnapshot.getChildren()) {
                     ModeloLogin login = datauser.getValue(ModeloLogin.class);
                     assert login != null;
                     assert firebaseUser != null;
 
-                    if (login.getCorreo().equals(firebaseUser.getEmail())){
+                    if (login.getCorreo().equals(firebaseUser.getEmail())) {
                         mNombrePerfil.setText(login.getNombre());
                         Log.e("dato", login.getNombre());
-                       // Glide.with(getContext()).load(firebaseUser.getPhotoUrl()).into(mfotoPerfil);
+                        // Glide.with(getContext()).load(firebaseUser.getPhotoUrl()).into(mfotoPerfil);
 
                     }
                 }
@@ -173,12 +179,13 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     }
 
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
         AppCompatActivity activi = (AppCompatActivity) getActivity();
         activi.getMenuInflater().inflate(R.menu.item_exit, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        //return  ;
     }
 
 
@@ -259,7 +266,8 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
     }
-    public void initComponentes (){
+
+    public void initComponentes() {
         mTabsAdapter = new TabsAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -269,24 +277,26 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     public void onClick(View v) {
         Intent abriGaleria = new Intent(Intent.ACTION_PICK);
         abriGaleria.setType("image/*");
-        startActivityForResult(abriGaleria,GALLERY_INTENT);
+        startActivityForResult(abriGaleria, GALLERY_INTENT);
 
     }
 
-   /* @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK);{
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) ;
+        {
             Uri uri = data.getData();
             StorageReference filePath = storageReference.child("fotosUsuarios").child(uri.getLastPathSegment());
 
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                     Toast.makeText(getContext(), "Se subio la foto exitosamente", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-    }*/
+    }
 }

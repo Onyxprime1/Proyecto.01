@@ -29,6 +29,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
+import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.adaptadores.AdaptadorMessage;
 import kevin.com.proyecto01.modelos.ChatsModel;
 import kevin.com.proyecto01.modelos.MessageModel;
@@ -50,6 +51,7 @@ public class Chat extends AppCompatActivity {
 
     private FirebaseUser fuser;
     private DatabaseReference reference;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +67,9 @@ public class Chat extends AppCompatActivity {
         final Calendar currentTime = Calendar.getInstance();
         currentTime.set(Calendar.HOUR_OF_DAY, 0);
 
-
+        firebaseAuth = FirebaseAuth.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference().child("Usuarios");
+        reference = Util.getmDatabase().getReference().child("Usuarios");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,7 +80,7 @@ public class Chat extends AppCompatActivity {
                     if (user.getNombre().equals(username)) {
                         nombre.setText(user.getNombre());
                     }
-                    readMessage(fuser.getUid(), id, user.getImagenPerfil());
+                    readMessage(firebaseAuth.getUid(), id, user.getImagenPerfil());
                 }
             }
 
@@ -103,7 +105,7 @@ public class Chat extends AppCompatActivity {
 
     private void readMessage(final String emisor, final String receptor, final String imagenUrl) {
         messageModels = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference().child("Chats");
+        reference = Util.getmDatabase().getReference().child("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -128,7 +130,7 @@ public class Chat extends AppCompatActivity {
 
     private void sendMenssage(String emisor, String receptor, String mensaje, String hora) {
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reference = Util.getmDatabase().getReference();
 
         Map<String, String> chatMap = new HashMap<>();
         chatMap.put("emisor", emisor);

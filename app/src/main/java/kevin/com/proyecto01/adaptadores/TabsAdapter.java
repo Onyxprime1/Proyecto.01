@@ -61,7 +61,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
             case 1:
                 return "Amigos";
             case 2:
-                return "Historial";
+                return "Notificaciones";
             case 3:
                 return "Favoritos";
             default:
