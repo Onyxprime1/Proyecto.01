@@ -13,12 +13,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -35,27 +31,27 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthCredential;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthCredential;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
+import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.Util.Util;
-import kevin.com.proyecto01.adaptadores.Adaptador;
-import kevin.com.proyecto01.Database.Entidad.ProgramerEntity;
 import kevin.com.proyecto01.adaptadores.TabsAdapter;
 import kevin.com.proyecto01.login.MainActivity;
 import kevin.com.proyecto01.login.ModeloLogin;
@@ -72,7 +68,9 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     private SharedPreferences preferences;
     private GoogleApiClient googleApiClient;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference reference;
+    private UploadTask uploadTask;
+    final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference dataReference;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private CircleImageView mfotoPerfil;
     private TextView mNombrePerfil;
@@ -81,15 +79,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private StorageReference storageReference;
-   // private FloatingActionButton mButtonSubirFoto;
-
+    private FloatingActionButton mButtonSubirFoto;
     private Toolbar mytoolbar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
         storageReference = FirebaseStorage.getInstance().getReference();
+        uploadTask = uploadTask;
         preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -120,20 +119,19 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        mfotoPerfil = view.findViewById(R.id.foto);
+        mfotoPerfil = view.findViewById(R.id.civ_fotoPerfil);
         imgFondo = view.findViewById(R.id.fondo);
         mNombrePerfil = view.findViewById(R.id.userFragmen2);
         mTabLayout = view.findViewById(R.id.tablayout_perfil);
         mViewPager = view.findViewById(R.id.viewPager_perfil);
-        //mButtonSubirFoto = view.findViewById(R.id.fab_subir_foto);
-        //mButtonSubirFoto.setOnClickListener(this);
+        mButtonSubirFoto = view.findViewById(R.id.fab_subir_foto);
+        mButtonSubirFoto.setOnClickListener(this);
         mytoolbar = view.findViewById(R.id.toolbar3);
-
         insertNestedFragment();
         initComponentes();
         obtenerDatosUsuario();
-        showToolbar("", view);
-
+        showToolbar();
+        setHasOptionsMenu(true);
     }
 
     public void insertNestedFragment() {
@@ -142,52 +140,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         transaction.replace(R.id.viewPager_perfil, new Repositorios()).commit();
     }
 
-    public void showToolbar(String tittle, View view) {
+    public void showToolbar() {
         AppCompatActivity activi = (AppCompatActivity) getActivity();
-
         activi.setSupportActionBar(mytoolbar);
-        activi.getSupportActionBar().setTitle(tittle);
-
     }
-
-    public void obtenerDatosUsuario() {
-        final FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        reference = Util.getmDatabase().getReference();
-        reference.child("Usuarios").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot datauser : dataSnapshot.getChildren()) {
-                    ModeloLogin login = datauser.getValue(ModeloLogin.class);
-                    assert login != null;
-                    assert firebaseUser != null;
-
-                    if (login.getCorreo().equals(firebaseUser.getEmail())) {
-                        mNombrePerfil.setText(login.getNombre());
-                        Log.e("dato", login.getNombre());
-                        // Glide.with(getContext()).load(firebaseUser.getPhotoUrl()).into(mfotoPerfil);
-
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         AppCompatActivity activi = (AppCompatActivity) getActivity();
-        activi.getMenuInflater().inflate(R.menu.item_exit, menu);
+        activi.getMenuInflater().inflate(R.menu.item_exit,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     //********************************************************************************************************************************
     private void setUserData(FirebaseUser user) {
@@ -208,7 +170,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         startActivity(intent);
     }
 
-    @Override
+    @Override // Realiza una accion segun el item seleccionado
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.exit:
@@ -267,6 +229,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         googleApiClient.disconnect();
     }
 
+    //Cargar los fragment del perfil
     public void initComponentes() {
         mTabsAdapter = new TabsAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mTabsAdapter);
@@ -277,26 +240,88 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     public void onClick(View v) {
         Intent abriGaleria = new Intent(Intent.ACTION_PICK);
         abriGaleria.setType("image/*");
-        startActivityForResult(abriGaleria, GALLERY_INTENT);
+        abriGaleria.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(abriGaleria,"Selecciona una foto"), GALLERY_INTENT);
 
     }
 
-    @Override
+    @Override //Obtiene la foto de la galeria si ha sido seleccionada
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) ;
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK)
         {
             Uri uri = data.getData();
-            StorageReference filePath = storageReference.child("fotosUsuarios").child(uri.getLastPathSegment());
-
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    Toast.makeText(getContext(), "Se subio la foto exitosamente", Toast.LENGTH_SHORT).show();
-                }
-            });
+            subirFoto(uri);
+            descargarFoto();
+        }else {
+            Toast.makeText(getContext(), "No se ha seleccionado ninguna foto", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void subirFoto (Uri uri){
+
+        StorageReference fotoPerfilRef = storageReference.child("fotoPerfil.jpg");
+        StorageReference fotoPerfilUsuariosRef = storageReference.child("fotos_perfil_usuarios/fotoPerfil.jpg");
+        UploadTask uploadTask = fotoPerfilUsuariosRef.putFile(uri);
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public void descargarFoto(){
+        final StorageReference fotoPerfilUsuariosRef = storageReference.child("fotos_perfil_usuarios/fotoPerfil.jpg");
+       Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+           @Override
+           public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+               if(!task.isSuccessful()) {
+                   throw task.getException();
+               }
+               String urlFoto = String.valueOf(fotoPerfilUsuariosRef.getDownloadUrl());
+               return fotoPerfilUsuariosRef.getDownloadUrl();
+           }
+       }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+           @Override
+           public void onComplete(@NonNull Task<Uri> task) {
+               if(task.isSuccessful()){
+                   Uri dowloadUri = task.getResult();
+               }else {
+
+               }
+           }
+       });
+
+    }
+    public void obtenerDatosUsuario() {
+
+        dataReference = Util.getmDatabase().getReference();
+        dataReference.child("Usuarios").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot datauser : dataSnapshot.getChildren()) {
+                    ModeloLogin login = datauser.getValue(ModeloLogin.class);
+                    assert login != null;
+                    assert firebaseUser != null;
+
+                    if (login.getCorreo().equals(firebaseUser.getEmail())) {
+                        mNombrePerfil.setText(login.getNombre()+login.getApellido());
+                        Log.e("dato", login.getNombre());
+                        // Glide.with(getContext()).load(firebaseUser.getPhotoUrl()).into(mfotoPerfil);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

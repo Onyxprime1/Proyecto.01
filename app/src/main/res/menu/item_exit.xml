@@ -6,7 +6,5 @@
         android:id="@+id/exit"
         android:title="Cerrar sesión"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom"/>
-
-
+        app:showAsAction="never"/>
 </menu>
