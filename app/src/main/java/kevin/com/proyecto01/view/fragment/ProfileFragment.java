@@ -81,6 +81,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     private StorageReference storageReference;
     private FloatingActionButton mButtonSubirFoto;
     private Toolbar mytoolbar;
+    private String titulo;
 
 
     @Override
@@ -89,6 +90,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
         storageReference = FirebaseStorage.getInstance().getReference();
         uploadTask = uploadTask;
+        obtenerDatosUsuario();
         preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -120,7 +122,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         mfotoPerfil = view.findViewById(R.id.civ_fotoPerfil);
-        imgFondo = view.findViewById(R.id.fondo);
+        imgFondo = view.findViewById(R.id.img_fondo);
         mNombrePerfil = view.findViewById(R.id.userFragmen2);
         mTabLayout = view.findViewById(R.id.tablayout_perfil);
         mViewPager = view.findViewById(R.id.viewPager_perfil);
@@ -129,8 +131,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         mytoolbar = view.findViewById(R.id.toolbar3);
         insertNestedFragment();
         initComponentes();
-        obtenerDatosUsuario();
-        showToolbar();
+        showToolbar(titulo);
         setHasOptionsMenu(true);
     }
 
@@ -140,9 +141,10 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         transaction.replace(R.id.viewPager_perfil, new Repositorios()).commit();
     }
 
-    public void showToolbar() {
+    public void showToolbar(String title) {
         AppCompatActivity activi = (AppCompatActivity) getActivity();
         activi.setSupportActionBar(mytoolbar);
+        activi.getSupportActionBar().setTitle(title);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -312,7 +314,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
                     assert firebaseUser != null;
 
                     if (login.getCorreo().equals(firebaseUser.getEmail())) {
-                        mNombrePerfil.setText(login.getNombre()+login.getApellido());
+                       titulo = login.getNombre()+" "+login.getApellido();
                         Log.e("dato", login.getNombre());
                         // Glide.with(getContext()).load(firebaseUser.getPhotoUrl()).into(mfotoPerfil);
                     }
