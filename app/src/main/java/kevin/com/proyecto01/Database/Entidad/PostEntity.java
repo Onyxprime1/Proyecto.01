@@ -19,10 +19,11 @@ public class PostEntity {
     private String fecha;
     private boolean favorite;
     private int numLikes;
+    private String position;
 
     public PostEntity(){}
 
-    public PostEntity(String titulo, String propietario, String mensaje, String documento, String imagen, String fecha) {
+    public PostEntity(String titulo, String propietario, String mensaje, String documento, String imagen, String fecha, String position) {
         this.titulo = titulo;
         this.mensaje = mensaje;
         this.propietario = propietario;
@@ -31,6 +32,7 @@ public class PostEntity {
         this.fecha = fecha;
         this.favorite = false;
         this.numLikes = 0;
+        this.position = position;
     }
 
     public int getId() {
@@ -103,5 +105,13 @@ public class PostEntity {
 
     public void setPropietario(String propietario) {
         this.propietario = propietario;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

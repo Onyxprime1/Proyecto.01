@@ -63,6 +63,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.exists()){
                    PostEntity posts = dataSnapshot.getValue(PostEntity.class);
+                   posts.setPosition(dataSnapshot.getKey());
                    listaPosts.add(posts);
                 }
             }
@@ -122,7 +123,7 @@ public class NuevoPostDialogFragment extends DialogFragment {
 
                     Log.e(TAG, id_user );
 
-                    PostEntity postEntity = new PostEntity(titulo, id_user, mensaje, "", "", "");
+                    PostEntity postEntity = new PostEntity(titulo, id_user, mensaje, "", "", "", "");
 
 
                     upModelToFirebase(postEntity);
@@ -151,6 +152,8 @@ public class NuevoPostDialogFragment extends DialogFragment {
     private void upModelToFirebase(final PostEntity postEntity) {
 
         final DatabaseReference reference = Util.getmDatabase().getReference();
+
+        postEntity.setPosition(reference.getKey());
 
         listaPosts.add(0, postEntity);
 

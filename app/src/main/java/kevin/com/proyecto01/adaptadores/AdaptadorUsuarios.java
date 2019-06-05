@@ -42,7 +42,7 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         viewHolder.mNombreUsuario.setText(mListaUsuarios.get(i).getNombre());
         //Glide.with(context).load(mListaUsuarios.get(i).getUrlFotoAmigo()).into(viewHolder.mFotoUsuario);
@@ -67,9 +67,10 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
                 noti.put("Receptor", notificacion.getReceptor());
                 noti.put("EsAmigo", notificacion.getEsAmigo());
 
-                reference.child("Notificiones").child(receptor).push().setValue(noti);
+                reference.child("Notificaciones").child(receptor).push().setValue(noti);
 
-
+                viewHolder.button.setEnabled(false);
+                viewHolder.button.setText("Solicitud envidada");
             }
         });
         

@@ -17,7 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
@@ -50,7 +52,7 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        viewHolder.bind(notificaciones.get(position), activity);
+        viewHolder.bind(notificaciones.get(position), activity, position);
     }
 
     @Override
@@ -64,7 +66,6 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
         CircleImageView imgUserInvitation;
         MaterialButton btnAcceptInvitation;
 
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -73,9 +74,9 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
             btnAcceptInvitation = itemView.findViewById(R.id.btn_aceptarInvitation);
         }
 
-        public void bind(final Notificacion notificacion, final Activity activity) {
+        public void bind(final Notificacion notificacion, final Activity activity, final int position) {
 
-            DatabaseReference reference = Util.getmDatabase().getReference();
+            final DatabaseReference reference = Util.getmDatabase().getReference();
 
             reference.child("Usuarios").child(notificacion.getEmisor()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -104,6 +105,49 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
                     //Aceptar invitación
                     //Quitar de Notificaciones al usuario actual
                     //Pasar al usuario a la lista de amigos
+
+                    Map<String, String> amigos = new HashMap<>();
+                    amigos.put("idAmigo", notificacion.getReceptor());
+
+                    Map<String, String> amigoReceptor = new HashMap<>();
+                    amigoReceptor.put("idAmigo", notificacion.getEmisor());
+
+                    reference.child("Amigos").child(notificacion.getEmisor()).push().setValue(amigos);
+                    reference.child("Amigos").child(notificacion.getReceptor()).push().setValue(amigoReceptor);
+
+                    btnAcceptInvitation.setEnabled(false);
+                    btnAcceptInvitation.setText("Solicitud aceptada");
+
+
+                    //Quitar de la rama de notificaciones la solicitud de invitación
+                    reference.child("Notificaciones").child(notificacion.getReceptor()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                for(DataSnapshot data : dataSnapshot.getChildren()){
+                                    Notificacion noti = data.getValue(Notificacion.class);
+
+                                    if(noti.getEmisor().equals(notificacion.getEmisor())){
+
+                                        Log.e(TAG, "La clave ::" + data.getKey());
+                                        Log.e(TAG, "El emisor ::" + notificacion.getEmisor());
+
+                                        reference.child("Notificaciones").child(notificacion.getReceptor())
+                                                .child(data.getKey()).child("EsAmigo").setValue("Si");
+
+                                        notificaciones.remove(position);
+                                        notifyItemRemoved(position);
+                                    }
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
             });

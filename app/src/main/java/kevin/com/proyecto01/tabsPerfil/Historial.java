@@ -54,18 +54,20 @@ public class Historial extends Fragment {
         DatabaseReference reference = Util.getmDatabase().getReference();
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        reference.child("Notificiones").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
+        reference.child("Notificaciones").child(auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
                 listaNotificaciones.clear();
 
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        Notificacion notificacion = data.getValue(Notificacion.class);
-                        listaNotificaciones.add(notificacion);
-                        adaptadorNotificacion.notifyDataSetChanged();
-                    }
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Notificacion notificacion = data.getValue(Notificacion.class);
+                    listaNotificaciones.add(notificacion);
+                    adaptadorNotificacion.notifyDataSetChanged();
                 }
+
+            }
 
 
             @Override
