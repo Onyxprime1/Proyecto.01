@@ -63,8 +63,11 @@ public class Historial extends Fragment {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Notificacion notificacion = data.getValue(Notificacion.class);
-                    listaNotificaciones.add(notificacion);
-                    adaptadorNotificacion.notifyDataSetChanged();
+
+                    if(notificacion.getEsAmigo().equals("No")){
+                        listaNotificaciones.add(notificacion);
+                        adaptadorNotificacion.notifyDataSetChanged();
+                    }
                 }
 
             }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.adaptadores.AdaptadorAmigos;
+import kevin.com.proyecto01.login.ModeloLogin;
+import kevin.com.proyecto01.modelos.Amigo;
 import kevin.com.proyecto01.modelos.AmigosModel;
 
 /**
@@ -30,9 +33,10 @@ import kevin.com.proyecto01.modelos.AmigosModel;
 public class Amigos extends Fragment {
 
     public static final int NUMERO_COLUMNAS = 3;
+    private static final String TAG = "Amigos";
     private RecyclerView mRecyclerAmigos;
     private AdaptadorAmigos mAdaptadorAmigos;
-    private ArrayList<AmigosModel> mListaAmigos;
+    private ArrayList<ModeloLogin> mListaAmigos;
 
     private FirebaseUser fuser;
 
@@ -49,13 +53,19 @@ public class Amigos extends Fragment {
         mRecyclerAmigos = view.findViewById(R.id.recy_amigos);
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = Util.getmDatabase().getReference().child("Amigos");
+        DatabaseReference reference = Util.getmDatabase().getReference().child("Amigos").child(fuser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (data.getKey().equals(fuser.getUid())){
+
+                mListaAmigos.clear();
+
+                if(dataSnapshot.exists()){
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                        Amigo amigo = data.getValue(Amigo.class);
+                        cargarAmigos(amigo);
 
                     }
                 }
@@ -66,9 +76,32 @@ public class Amigos extends Fragment {
 
             }
         });
+
         iniciarRecycler();
-        getDatos();
         return view;
+    }
+
+    private void cargarAmigos(Amigo amigo) {
+
+        DatabaseReference reference = Util.getmDatabase().getReference();
+        reference.child("Usuarios").child(amigo.getIdAmigo()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    ModeloLogin amigo = dataSnapshot.getValue(ModeloLogin.class);
+
+                    mListaAmigos.add(amigo);
+                    mAdaptadorAmigos.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void iniciarRecycler() {
@@ -80,11 +113,5 @@ public class Amigos extends Fragment {
 
     }
 
-    public void getDatos() {
-
-        mListaAmigos.add(new AmigosModel("", "Luis"));
-        mListaAmigos.add(new AmigosModel("", "Carlos"));
-        mListaAmigos.add(new AmigosModel("", "Fredy"));
-    }
 
 }

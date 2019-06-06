@@ -14,14 +14,14 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import kevin.com.proyecto01.R;
-import kevin.com.proyecto01.modelos.AmigosModel;
+import kevin.com.proyecto01.login.ModeloLogin;
 
 public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHolder> {
 
-    private ArrayList<AmigosModel> mListaAmigos;
-    Context context;
+    private ArrayList<ModeloLogin> mListaAmigos;
+    private Context context;
 
-    public AdaptadorAmigos(ArrayList<AmigosModel> mListaAmigos, Context context) {
+    public AdaptadorAmigos(ArrayList<ModeloLogin> mListaAmigos, Context context) {
         this.mListaAmigos = mListaAmigos;
         this.context = context;
     }
@@ -37,16 +37,13 @@ public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.mNombreAmigo.setText(mListaAmigos.get(i).getNombreAmigo());
-        //Glide.with(context).load(mListaAmigos.get(i).getUrlFotoAmigo()).into(viewHolder.mFotoAmigo);
+        viewHolder.bind(mListaAmigos.get(i), context);
 
     }
 
     @Override
     public int getItemCount() {
        return mListaAmigos.size();
-
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -56,9 +53,15 @@ public class AdaptadorAmigos extends RecyclerView.Adapter<AdaptadorAmigos.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mFotoAmigo = itemView.findViewById(R.id.civ_fotoAmigo);
-            mNombreAmigo = itemView.findViewById(R.id.txt_nombreAmigo);
+            mFotoAmigo = itemView.findViewById(R.id.civ_fotoAmigoP);
+            mNombreAmigo = itemView.findViewById(R.id.txt_nombreAmigoP);
 
+        }
+
+        public void bind(ModeloLogin modeloLogin, Context context) {
+
+            Glide.with(context).load(modeloLogin.getUrlImage()).into(mFotoAmigo);
+            mNombreAmigo.setText(modeloLogin.getNombre());
         }
     }
 }

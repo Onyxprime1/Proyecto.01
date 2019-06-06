@@ -25,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kevin.com.proyecto01.R;
 import kevin.com.proyecto01.Util.Util;
 import kevin.com.proyecto01.login.ModeloLogin;
+import kevin.com.proyecto01.modelos.Amigo;
 import kevin.com.proyecto01.modelos.Notificacion;
 
 public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotificacion.ViewHolder> {
@@ -81,7 +82,7 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
             reference.child("Usuarios").child(notificacion.getEmisor()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
+                    if (dataSnapshot.exists()) {
                         ModeloLogin amigo = dataSnapshot.getValue(ModeloLogin.class);
 
                         txtNameInvitation.setText(amigo.getNombre());
@@ -95,9 +96,6 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
                 }
             });
 
-
-
-
             btnAcceptInvitation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,14 +104,18 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
                     //Quitar de Notificaciones al usuario actual
                     //Pasar al usuario a la lista de amigos
 
+                    Amigo amigosModelo = new Amigo(notificacion.getReceptor());
+
                     Map<String, String> amigos = new HashMap<>();
-                    amigos.put("idAmigo", notificacion.getReceptor());
+                    amigos.put("idAmigo", amigosModelo.getIdAmigo());
+
+                    Amigo amigosModelo2 = new Amigo(notificacion.getEmisor());
 
                     Map<String, String> amigoReceptor = new HashMap<>();
-                    amigoReceptor.put("idAmigo", notificacion.getEmisor());
+                    amigoReceptor.put("idAmigo", amigosModelo2.getIdAmigo());
 
-                    reference.child("Amigos").child(notificacion.getEmisor()).push().setValue(amigos);
-                    reference.child("Amigos").child(notificacion.getReceptor()).push().setValue(amigoReceptor);
+                    reference.child("Amigos").child(notificacion.getEmisor()).push().setValue(amigosModelo);
+                    reference.child("Amigos").child(notificacion.getReceptor()).push().setValue(amigosModelo2);
 
                     btnAcceptInvitation.setEnabled(false);
                     btnAcceptInvitation.setText("Solicitud aceptada");
@@ -123,11 +125,11 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
                     reference.child("Notificaciones").child(notificacion.getReceptor()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.exists()){
-                                for(DataSnapshot data : dataSnapshot.getChildren()){
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
                                     Notificacion noti = data.getValue(Notificacion.class);
 
-                                    if(noti.getEmisor().equals(notificacion.getEmisor())){
+                                    if (noti.getEmisor().equals(notificacion.getEmisor())) {
 
                                         Log.e(TAG, "La clave ::" + data.getKey());
                                         Log.e(TAG, "El emisor ::" + notificacion.getEmisor());
@@ -154,4 +156,5 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
 
         }
     }
+
 }
