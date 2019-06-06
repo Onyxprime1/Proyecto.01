@@ -137,8 +137,6 @@ public class AdaptadorNotificacion extends RecyclerView.Adapter<AdaptadorNotific
                                         reference.child("Notificaciones").child(notificacion.getReceptor())
                                                 .child(data.getKey()).child("EsAmigo").setValue("Si");
 
-                                        notificaciones.remove(position);
-                                        notifyItemRemoved(position);
                                     }
 
                                 }

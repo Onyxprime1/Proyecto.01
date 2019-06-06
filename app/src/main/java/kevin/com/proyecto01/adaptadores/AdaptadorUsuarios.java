@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
@@ -45,13 +46,13 @@ public class AdaptadorUsuarios extends RecyclerView.Adapter<AdaptadorUsuarios.Vi
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         viewHolder.mNombreUsuario.setText(mListaUsuarios.get(i).getNombre());
-        //Glide.with(context).load(mListaUsuarios.get(i).getUrlFotoAmigo()).into(viewHolder.mFotoUsuario);
+        Glide.with(context).load(mListaUsuarios.get(i).getUrlImage()).into(viewHolder.mFotoUsuario);
         
         
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Hola mundo", Toast.LENGTH_SHORT).show();
+
 
                 DatabaseReference reference = Util.getmDatabase().getReference();
 
