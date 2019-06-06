@@ -1,6 +1,7 @@
 package kevin.com.proyecto01.view.fragment;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -89,7 +90,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
         storageReference = FirebaseStorage.getInstance().getReference();
-        uploadTask = uploadTask;
+
         obtenerDatosUsuario();
         preferences = getActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
@@ -177,10 +178,33 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         switch (item.getItemId()) {
             case R.id.exit:
                 logOut();
-                //startActivity(new Intent(getActivity(), MainActivity.class));
+                break;
+
+            case R.id.acercaDe:
+                abrirAlertDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void abrirAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Información");
+
+        String mensaje = "Desarrolladores" +"\n"
+                +"Jimena Gramajo"+"\n"
+                +"Angel Elias"+"\n"
+                +"Kevin Mazariegos"+"\n"
+                +"Carlos Vásquez"+"\n"
+                +"\n"
+                +"INTECAP 2019"+"®"
+                +"\nVersión 1.0";
+
+
+        builder.setMessage(mensaje);
+
+        builder.setPositiveButton("Entendido", null ).show();
     }
 
     @Override
@@ -255,7 +279,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         {
             Uri uri = data.getData();
             subirFoto(uri);
-            descargarFoto();
+            //descargarFoto();
         }else {
             Toast.makeText(getContext(), "No se ha seleccionado ninguna foto", Toast.LENGTH_SHORT).show();
         }
@@ -266,6 +290,8 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
         StorageReference fotoPerfilUsuariosRef = storageReference.child("fotos_perfil_usuarios/fotoPerfil.jpg");
         UploadTask uploadTask = fotoPerfilUsuariosRef.putFile(uri);
 
+        //descargarFoto();
+        /*
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -277,10 +303,13 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
 
             }
         });
+
+        */
     }
 
     public void descargarFoto(){
         final StorageReference fotoPerfilUsuariosRef = storageReference.child("fotos_perfil_usuarios/fotoPerfil.jpg");
+
        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
            @Override
            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -295,6 +324,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.OnConne
            public void onComplete(@NonNull Task<Uri> task) {
                if(task.isSuccessful()){
                    Uri dowloadUri = task.getResult();
+                   Log.e("Profile", "El perfil: ---->" + dowloadUri);
                }else {
 
                }

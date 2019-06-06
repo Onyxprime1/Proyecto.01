@@ -7,4 +7,11 @@
         android:title="Cerrar sesión"
         android:orderInCategory="100"
         app:showAsAction="never"/>
+
+
+    <item
+        android:id="@+id/acercaDe"
+        android:title="Aceerca De"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
 </menu>
